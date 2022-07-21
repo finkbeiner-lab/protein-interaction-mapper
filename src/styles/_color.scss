@@ -1,0 +1,18 @@
+$palette: (
+    gladstone-blue: #002A40,
+    northwestern-purple: #3F2164,
+    cerulean-crayola: #33AAD6,
+    glaucous: #667FC5,
+    acid-blue: #00D4E6,
+    fusion-magenta: #CC29A3,
+    luminous-amber: #FAA408,
+    radiant-orange: #F76912,
+    mango-tango: #FA8E4E
+);
+
+:root {
+    @each $colorname, $value in $palette {
+        $keyname: "--" + $colorname;
+        #{$keyname}: #{$value};
+    }
+}
