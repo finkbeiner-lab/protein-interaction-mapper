@@ -4,8 +4,6 @@
 
 New proteins fold into their native structures during or after translation. However, this process is far from perfect, and often fails (Balch et al., 2008; Clark, 2004; Gershenson et al., 2014; Powers et al., 2009), leaving proteins in non-native states that are not functional and potentially toxic— especially if they form aggregates (Balch et al., 2008; Knowles et al., 2014; Powers and Gierasch, 2021; Powers et al., 2009). Because of this, all organisms, beginning with the last universal common ancestor (Powers and Balch, 2013), have a proteostasis network: a collection of cellular components that manage folding, trafficking, and degradation of the members of the proteome (Balch et al., 2008; Jayaraj et al., 2020; Powers and Gierasch, 2021; Powers et al., 2009). The proteostasis network is much discussed in the literature, but remains ill-defined, because there is no consensus of proteostasis network components. Although preliminary efforts with great substance have been made (Brehme et al., 2014; Shemesh et al., 2021), we aim to comprehensively enumerate the human proteostasis network, and make this standardized data accessible via a web-based interface.
 
-Our database so far contains components responsible for protein folding (chaperones and folding enzymes), protein trafficking into and out of organelles, and protein synthesis. The autophagy-lysosome pathway and ubiquitin-proteasome system will be added in the near future.
-
 We apply two criteria to elucidate proteostasis networks.
 
 1. The “entity-based” criterion: an “entity” (an individual protein or other substance, or a complex) is included as a member of the proteostasis network, if there is specific evidence in the literature of its role in proteostasis.
@@ -14,7 +12,9 @@ We apply two criteria to elucidate proteostasis networks.
 
 The latter criterion is important for including uncharacterized proteins, some of which are clearly members of structural families with roles in proteostasis. For example, HSPA12A and HSPA12B have not, to our knowledge, been shown to have chaperone activity; yet sequence homology indicates they are members of the HSP70 chaperone family. Thus, such proteins are included in the proteostasis network.
 
-We developed a taxonomic scheme to organize our enumeration of the proteostasis network, which is illustrated below. This taxonomy consists of five levels: *Branch*, *Class*, *Group*, *Type*, and *Subtype*.
+Our database so far contains proteostatic components responsible for protein folding (chaperones and folding enzymes), protein trafficking into and out of organelles, and protein synthesis. The autophagy-lysosome pathway and ubiquitin-proteasome system will be added in the near future.
+
+We developed a taxonomic schema to methodize our enumeration of proteostasis networks, which is illustrated below. This taxonomy consists of five levels: *Branch*, *Class*, *Group*, *Type*, and *Subtype*.
 
 ![Proteostasis network components](proteostasisNetworkComponents.png)
 
