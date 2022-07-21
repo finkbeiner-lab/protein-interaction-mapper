@@ -1,4 +1,6 @@
-# Protein Interaction Mapper [![Maintainer](https://img.shields.io/badge/maintainer-Proteostasis%20Consortium-blue)](https://www.proteostasisconsortium.com) [![License](https://img.shields.io/github/license/finkbeiner-lab/protein-interaction-mapper)](https://github.com/finkbeiner-lab/protein-interaction-mapper/blob/main/LICENSE)
+# Protein Interaction Mapper
+
+[![Maintainer](https://img.shields.io/badge/maintainer-Proteostasis%20Consortium-blue)](https://www.proteostasisconsortium.com) [![License](https://img.shields.io/github/license/finkbeiner-lab/protein-interaction-mapper)](https://github.com/finkbeiner-lab/protein-interaction-mapper/blob/main/LICENSE)
 
 ## Overview
 
