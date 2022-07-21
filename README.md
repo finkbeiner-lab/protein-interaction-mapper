@@ -39,13 +39,13 @@ We emphasize this enumeration is a dynamic entity that will be updated as new in
 ## Developing
 
 1. Install [Node.js >=16](https://nodejs.org/en/download/)
-2. Open this repo directory in your IDE, code editor or CLI and run
+2. Change to this repo directory in your IDE, code editor or CLI and run
 
     ```bash
     npm install && npm run dev
     ```
 
-3. Open a pull request with your contribution. We will review it & provide feedback shortly!
+3. Open a pull request to merge into the `develop` branch with your contribution. We will review it & provide feedback shortly!
 
 ## Building
 
@@ -58,3 +58,5 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for the target environment.
+
+Deployments are automatically updated upon committing to `main`.
