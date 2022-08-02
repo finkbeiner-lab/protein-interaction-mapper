@@ -1,0 +1,8 @@
+scalar BigInt
+
+type Query {
+	allProteins: [Protein]
+	allGenes: [Gene]
+
+	geneByID(ID: BigInt!): Gene
+}

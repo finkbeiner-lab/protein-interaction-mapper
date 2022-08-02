@@ -1,0 +1,7 @@
+scalar BigInt
+
+type Gene {
+	ID: BigInt
+	Symbol: String
+	Synonyms: [String]
+}

@@ -36,7 +36,7 @@ Note that “cytonuclear” components can, in principle, function in either the
 
 While *Group*, *Type*, and *Subtype* become increasingly specific descriptors of proteostasis functions, we only use as many descriptors as necessary to describe a proteostasis network component. Thus, not every component has *Type* or *Subtype* annotations. Also, many components have multiple roles in the proteostasis network. These are given multiple entries to reflect each distinct function.
 
-This enumeration method is a work-in-progress, and will be updated as new information becomes available. We are hopeful that website visitors will lend feedback, especially on our approach towards compiling a list of proteostasis network components. Please start a GitHub Discussion, or email [Evan Powers](https://www.proteostasisconsortium.com/people/) at [epowers@scripps.edu](mailto:epowers@scripps.edu), with any suggestions.
+This enumeration method is a work-in-progress, and will be updated as new information becomes available. We are hopeful that website visitors will lend feedback, especially on our approach towards compiling a list of proteostasis network components. Please start a GitHub Discussion, or email [Evan Powers](https://www.proteostasisconsortium.com/people/#:~:text=VIEW%20LAB-,Evan%20Powers%2C%20PhD,-Institute%20Investigator%0ADepartment) at [epowers@scripps.edu](mailto:epowers@scripps.edu), with any suggestions.
 
 ## Developing
 

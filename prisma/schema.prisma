@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model Gene {
+  ID       BigInt   @id @unique
+  Symbol   String
+  Synonyms String[]
+  info     Protein  @relation(fields: [Symbol], references: [Gene_Symbol], onDelete: Cascade)
+
+  @@map("gene")
+}
+
+model Protein {
+  Gene_Symbol            String   @id @unique @map("Gene Symbol")
+  Name                   String[]
+  Branch                 String[]
+  Class                  String[]
+  Group                  String[]
+  Subgroup               String[]
+  Type                   String[]
+  Distinguishing_Domains String[] @map("Distinguishing Domains")
+  UniProt_ID             String?  @map("UniProt ID")
+  gene                   Gene[]
+
+  @@map("info")
+}

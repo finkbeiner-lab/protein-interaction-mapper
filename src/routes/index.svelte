@@ -4,8 +4,8 @@
 
 <section class="workspace">
 	<Splitpanes theme="workspace-theme" style="height: 100%">
-		<Pane minSize={40}>1<br /><em class="specs">I have a min width of 20%</em></Pane>
-		<Pane size={60} minSize={25}>5</Pane>
+		<Pane minSize={20}>1<br /><em class="specs">I have a min width of 20%</em></Pane>
+		<Pane size={80} minSize={25}>5</Pane>
 	</Splitpanes>
 </section>
 
@@ -21,8 +21,7 @@
 				flex-shrink: 0;
 				padding: 0 4px;
 				transition: all 0.25s;
-				background-color: var(--northwestern-purple);
-				filter: opacity(60%);
+				background-color: var(--gladstone-blue);
 
 				&:before,
 				&:after {
@@ -34,15 +33,16 @@
 					transition: background-color 0.25s;
 				}
 				&:hover {
-					filter: opacity(50%);
+					filter: opacity(80%);
 				}
 				&:active:before,
 				&:active:after {
-					background-color: var(--northwestern-purple);
+					background-color: var(--gladstone-blue);
 				}
 				&:active {
-					padding: 0 5px;
-					filter: opacity(30%);
+					padding: 0 4.5px;
+					transition: padding 0.3s;
+					filter: opacity(70%);
 				}
 
 				&:hover:before,

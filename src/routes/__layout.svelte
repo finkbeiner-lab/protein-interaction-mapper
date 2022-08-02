@@ -1,6 +1,6 @@
 <script lang="typescript">
-	import '@fontsource/lexend-mega/800.css';
-	import '@fontsource/lexend-mega/300.css';
+	import '@fontsource/recursive/900.css';
+	import '@fontsource/recursive/300.css';
 
 	const name = [
 		{ full: 'protein', acronym: 'Prote' },
@@ -49,7 +49,7 @@
 		body {
 			margin: 0;
 			height: 100%;
-			min-width: fit-content;
+			overflow: hidden;
 		}
 	}
 
@@ -66,7 +66,7 @@
 	header {
 		all: unset;
 		display: block;
-		background: var(--gladstone-blue);
+		background-image: linear-gradient(to left, var(--gladstone-blue), var(--northwestern-purple));
 		margin: 0;
 		padding: 0;
 	}
@@ -94,12 +94,13 @@
 		position: relative;
 		flex-grow: 1;
 		padding: 0.75rem;
-		font-family: 'Lexend Mega', sans-serif;
+		font-family: 'Recursive', sans-serif;
+		letter-spacing: 0.25rem;
 		font-weight: 800;
 		font-size: 3rem;
 		white-space: nowrap;
 
-		abbr {
+		& abbr {
 			display: flex;
 		}
 
@@ -139,11 +140,11 @@
 		}
 		&__interaction:after {
 			content: '';
-			animation: 0.25s reverseTypewriteInteraction;
+			animation: 0.25s reverseTypewriteInteraction, 0.2s forwards ease-out reverseFadeProtein;
 		}
 		&__interaction:hover:after {
 			content: '';
-			animation: 0.4s forwards typewriteInteraction;
+			animation: 0.4s forwards typewriteInteraction, 0.25s forwards ease-in-out fadeProtein;
 		}
 
 		&__mapper {
