@@ -1,11 +1,11 @@
 type Protein {
 	Gene_Symbol: String!
-	Name: [String]
-	Branch: [String]
-	Class: [String]
-	Group: [String]
-	Subgroup: [String]
-	Type: [String]
-	Distinguishing_Domains: [String]
+	Name: String
+	Branch: String
+	Class: String
+	Group: String
+	Subgroup: String
+	Type: String
+	Distinguishing_Domains: String
 	UniProt_ID: String
 }
