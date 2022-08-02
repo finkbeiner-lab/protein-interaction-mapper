@@ -34,10 +34,10 @@ const serverApp = createServer({
 	}
 });
 
-export const get = async (event) => {
+export const GET = async (event) => {
 	return serverApp.handleRequest(event.request, event);
 };
 
-export const post = async (event) => {
+export const POST = async (event) => {
 	return serverApp.handleRequest(event.request, event);
 };

@@ -4,7 +4,7 @@
 
 <section class="workspace">
 	<Splitpanes theme="workspace-theme" style="height: 100%">
-		<Pane minSize={20}>1<br /><em class="specs">I have a min width of 20%</em></Pane>
+		<Pane size={25} minSize={20}>1<br /><em class="specs">I have a min width of 20%</em></Pane>
 		<Pane size={80} minSize={25}>5</Pane>
 	</Splitpanes>
 </section>
