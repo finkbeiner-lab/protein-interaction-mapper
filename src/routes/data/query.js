@@ -1,5 +1,5 @@
 import { createServer } from '@graphql-yoga/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client/edge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 
 import { BigIntResolver } from 'graphql-scalars';
