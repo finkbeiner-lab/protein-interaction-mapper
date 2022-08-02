@@ -1,12 +1,12 @@
 import { createServer } from '@graphql-yoga/common';
 import { PrismaClient } from '@prisma/client';
-import { loadFiles } from '@graphql-tools/load-files';
+import { loadFilesSync } from '@graphql-tools/load-files';
 
 import { BigIntResolver } from 'graphql-scalars';
 
 const serverApp = createServer({
 	schema: {
-		typeDefs: await loadFiles('src/lib/schema/**/*.gql'),
+		typeDefs: loadFilesSync('src/lib/schema/**/*.gql'),
 		resolvers: {
 			BigInt: BigIntResolver,
 
