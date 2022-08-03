@@ -1,7 +1,11 @@
 {
 	"functions": {
+<<<<<<< HEAD
 		"src/routes/data/query.js": {
 			"includeFiles": "./src/lib/schema/**/*.gql"
 		}
+=======
+		"includeFiles": "./src/lib/schema/**/*.gql"
+>>>>>>> f7bed814c4d14c3d7394ac782683638c6ede0d42
 	}
 }
