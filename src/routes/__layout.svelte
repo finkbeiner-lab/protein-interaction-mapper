@@ -140,11 +140,11 @@
 		}
 		&__interaction:after {
 			content: '';
-			animation: 0.25s reverseTypewriteInteraction, 0.2s forwards ease-out reverseFadeProtein;
+			animation: 0.15s reverseTypewriteInteraction, 0.2s forwards ease-out reverseFadeProtein;
 		}
 		&__interaction:hover:after {
 			content: '';
-			animation: 0.4s forwards typewriteInteraction, 0.25s forwards ease-in-out fadeProtein;
+			animation: 0.2s forwards typewriteInteraction, 0.25s forwards ease-in-out fadeProtein;
 		}
 
 		&__mapper {
