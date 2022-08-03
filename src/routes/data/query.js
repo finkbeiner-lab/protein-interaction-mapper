@@ -1,12 +1,39 @@
 import { createServer } from '@graphql-yoga/common';
 import { PrismaClient } from '@prisma/client';
-import { loadFiles } from '@graphql-tools/load-files';
 
 import { BigIntResolver } from 'graphql-scalars';
 
 const serverApp = createServer({
 	schema: {
-		typeDefs: await loadFiles('src/lib/schema/**/*.gql'),
+		typeDefs: `
+			scalar BigInt
+
+			type Query {
+				allProteins: [Protein]
+				allGenes: [Gene]
+			
+				geneByID(ID: BigInt!): Gene
+			}
+
+			type Protein {
+				Gene_Symbol: String!
+				Name: String
+				Branch: String
+				Class: String
+				Group: String
+				Subgroup: String
+				Type: String
+				Distinguishing_Domains: String
+				UniProt_ID: String
+			}
+			
+			type Query {
+				allProteins: [Protein]
+				allGenes: [Gene]
+			
+				geneByID(ID: BigInt!): Gene
+			}
+		`,
 		resolvers: {
 			BigInt: BigIntResolver,
 

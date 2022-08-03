@@ -1,7 +1,0 @@
-{
-	"functions": {
-		"src/routes/data/query.js": {
-			"includeFiles": "./src/lib/schema/**/*.gql"
-		}
-	}
-}
