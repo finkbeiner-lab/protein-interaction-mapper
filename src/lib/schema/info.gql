@@ -9,3 +9,7 @@ type Protein {
 	Distinguishing_Domains: String
 	UniProt_ID: String
 }
+
+type Query {
+	allProteins: [Protein]
+}

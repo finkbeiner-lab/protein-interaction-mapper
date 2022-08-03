@@ -5,3 +5,8 @@ type Gene {
 	Symbol: String
 	Synonyms: String
 }
+
+type Query {
+	allGenes: [Gene]
+	geneByID(ID: BigInt!): Gene
+}
