@@ -8,11 +8,10 @@ const serverApp = createServer({
 		typeDefs: `
 			scalar BigInt
 
-			type Query {
-				allProteins: [Protein]
-				allGenes: [Gene]
-			
-				geneByID(ID: BigInt!): Gene
+			type Gene {
+				ID: BigInt
+				Symbol: String
+				Synonyms: String
 			}
 
 			type Protein {
