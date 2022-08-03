@@ -1,5 +1,45 @@
+<script context="module">
+	export const load = async ({ fetch, params }) => {
+		try {
+			const response = await fetch('/data/query', {
+				method: 'POST',
+				credentials: 'same-origin',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					query: `{
+							allProteins {
+								Gene_Symbol
+								Name
+								Branch
+								Group
+								Subgroup
+								Type
+								Distinguishing_Domains
+								UniProt_ID
+							}
+						}
+					`
+				})
+			});
+			if (response.ok) {
+				const resolvedData = await response.json();
+				return {
+					props: { resolvedData }
+				};
+			}
+		} catch (error) {
+			console.error(`Error loading protein data /: ${error}`);
+		}
+	};
+</script>
+
 <script>
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
+
+	export let resolvedData;
+	console.log(resolvedData);
 </script>
 
 <section class="workspace">
