@@ -24,6 +24,7 @@
 				})
 			});
 			if (response.ok) {
+				throw new Error('code path followed');
 				const resolvedQuery = await response.json();
 				return {
 					props: { resolvedQuery }
@@ -32,7 +33,7 @@
 				throw new Error(`Error requesting protein data /: ${error}`);
 			}
 		} catch (error) {
-			throw new Error(`Error loading protein data /: ${error}`);
+			throw new Error(`Server error /: ${error}`);
 		}
 	};
 </script>
@@ -47,7 +48,7 @@
 <section class="workspace">
 	<Splitpanes theme="workspace-theme" style="height: 100%">
 		<Pane size={25} minSize={20} class="workspace__controls">1<br /><em /></Pane>
-		<Pane size={80} minSize={25} class="workspace-grid">
+		<Pane size={80} minSize={25} class="workspace__grid">
 			<div class="workspace__table">
 				<ProteinAnnotationTable proteinData={resolvedQuery.data.allProteins} />
 			</div>
@@ -66,10 +67,6 @@
 			&__table {
 				height: fit-content;
 			}
-		}
-
-		.workspace-grid {
-			overflow: scroll;
 		}
 		.splitpanes.workspace-theme {
 			.splitpanes__pane {
