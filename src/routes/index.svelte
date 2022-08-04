@@ -28,9 +28,11 @@
 				return {
 					props: { resolvedQuery }
 				};
+			} else {
+				throw new Error(`Error requesting protein data /: ${error}`);
 			}
 		} catch (error) {
-			console.error(`Error loading protein data /: ${error}`);
+			throw new Error(`Error loading protein data /: ${error}`);
 		}
 	};
 </script>
