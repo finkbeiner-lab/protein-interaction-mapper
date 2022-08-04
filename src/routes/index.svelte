@@ -24,8 +24,8 @@
 				})
 			});
 			if (response.ok) {
-				throw new Error('code path followed');
 				const resolvedQuery = await response.json();
+				throw new Error(`query resolved to: ${JSON.stringify(resolvedQuery)}`);
 				return {
 					props: { resolvedQuery }
 				};
