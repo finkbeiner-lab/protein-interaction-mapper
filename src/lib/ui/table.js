@@ -1,30 +1,17 @@
+import { createTable } from 'svelte-headless-table';
+import { get, writable } from 'svelte/store';
+
 export class Table {
-	constructor() {
-		this.instance;
-
-		this.attributes;
-		this.headerAttributes;
-		this.rowAttributes;
-
-		this.headerRows;
-		this.rows;
-		this.originalRows;
-		this.currentPageRows;
-
-		this.visibleColumns;
-
-		this.pluginStates;
+	constructor(dataList) {
+		this.dataListStore = writable(dataList);
 	}
 
 	build(
-		dataList = [],
 		pluginMap = {},
 		columnDefinitionList = [{ name: '', id: '', pluginOptions: {}, group: null }],
 		columnGroupList = []
 	) {
-		import { createTable } from 'svelte-headless-table';
-
-		this.instance = createTable(dataList, pluginMap);
+		this.instance = createTable(this.dataListStore, pluginMap);
 
 		let columns;
 		if (columnGroupList <= 0) {
@@ -52,7 +39,7 @@ export class Table {
 
 		this.attributes = viewModel.tableAttrs;
 		this.headerAttributes = viewModel.tableHeadAttrs;
-		this.rowAttributes = viewModel.tableBodyAttrs;
+		this.bodyAttributes = viewModel.tableBodyAttrs;
 
 		this.headerRows = viewModel.headerRows;
 		this.rows = viewModel.rows;

@@ -2,18 +2,24 @@
 	import { Subscribe, Render } from 'svelte-headless-table';
 	import { Table } from '$lib/ui/table';
 
-	let dataList;
-	let pluginMap;
-	let columnDefinitionList;
-	let columnGroupList;
+	export let dataList;
+	export let pluginMap;
+	export let columnDefinitionList;
+	export let columnGroupList;
 
-	let table = new Table();
-	table.build(dataList, pluginMap, columnDefinitionList, columnGroupList);
+	console.log(dataList);
+
+	let table = new Table(dataList);
+	table.build(pluginMap, columnDefinitionList, columnGroupList);
+
+	const { attributes: tableAttributes, headerRows, bodyAttributes, rows } = table;
+
+	console.log(table.instance);
 </script>
 
-<table {...$table.attributes}>
+<table {...$tableAttributes}>
 	<thead>
-		{#each $table.headerRows as headerRow (headerRow.id)}
+		{#each $headerRows as headerRow (headerRow.id)}
 			<Subscribe headerAttributes={headerRow.attrs()} let:headerAttributes>
 				<tr {...headerAttributes}>
 					{#each headerRow.cells as cell (cell.id)}
@@ -27,8 +33,8 @@
 			</Subscribe>
 		{/each}
 	</thead>
-	<tbody {...$table.bodyAttributes}>
-		{#each $table.pageRows as row (row.id)}
+	<tbody {...$bodyAttributes}>
+		{#each $rows as row (row.id)}
 			<Subscribe rowAttributes={row.attrs()} let:rowAttributes>
 				<tr {...rowAttributes}>
 					{#each row.cells as cell (cell.id)}

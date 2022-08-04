@@ -49,7 +49,6 @@
 		body {
 			margin: 0;
 			height: 100%;
-			overflow: hidden;
 		}
 	}
 
@@ -57,10 +56,6 @@
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
-	}
-
-	main.preload {
-		animation-duration: 0;
 	}
 
 	header {

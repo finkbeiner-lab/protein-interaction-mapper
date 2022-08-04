@@ -24,9 +24,9 @@
 				})
 			});
 			if (response.ok) {
-				const resolvedData = await response.json();
+				const resolvedQuery = await response.json();
 				return {
-					props: { resolvedData }
+					props: { resolvedQuery }
 				};
 			}
 		} catch (error) {
@@ -36,16 +36,18 @@
 </script>
 
 <script>
+	import ProteinAnnotationTable from '$lib/proteinAnnotationTable.svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
 
-	export let resolvedData;
-	console.log(resolvedData);
+	export let resolvedQuery;
 </script>
 
 <section class="workspace">
 	<Splitpanes theme="workspace-theme" style="height: 100%">
 		<Pane size={25} minSize={20}>1<br /><em class="specs">I have a min width of 20%</em></Pane>
-		<Pane size={80} minSize={25}>5</Pane>
+		<Pane size={80} minSize={25}>
+			<ProteinAnnotationTable proteinData={resolvedQuery.data.allProteins} />
+		</Pane>
 	</Splitpanes>
 </section>
 

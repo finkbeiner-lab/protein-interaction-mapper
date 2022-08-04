@@ -2373,10 +2373,23 @@ svelte-check@^2.7.1:
     svelte-preprocess "^4.0.0"
     typescript "*"
 
+svelte-headless-table@^0.12.2:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/svelte-headless-table/-/svelte-headless-table-0.12.2.tgz#106020ed5fa8a3ca8f7a6e12e5461a6ed9ab9a5a"
+  integrity sha512-9VtNqRxeBOciZL9XsBZA5OkB3HT+nizcuKKewtQgor9mSNmrXwHDZJIqW3+erNdsy9hMIOmmU4k0Hd6fF8bu3Q==
+  dependencies:
+    svelte-keyed "^1.1.5"
+    svelte-subscribe "^1.0.4"
+
 svelte-hmr@^0.14.12:
   version "0.14.12"
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.14.12.tgz#a127aec02f1896500b10148b2d4d21ddde39973f"
   integrity sha512-4QSW/VvXuqVcFZ+RhxiR8/newmwOCTlbYIezvkeN6302YFRE8cXy0naamHcjz8Y9Ce3ITTZtrHrIL0AGfyo61w==
+
+svelte-keyed@^1.1.5:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/svelte-keyed/-/svelte-keyed-1.1.6.tgz#2ba4f2ecf56a46e7e86eaa1c1585d0807661dd58"
+  integrity sha512-sd/7j3waSpOkeiQqATstlvNySbEpSs49aoaZ/nc09x/iEndnXQ/9Zy5PTD06+C7hlZk8KjZ4bhrktAQ791jWMQ==
 
 svelte-preprocess@^4.0.0, svelte-preprocess@^4.10.6:
   version "4.10.7"
@@ -2397,6 +2410,11 @@ svelte-splitpanes@^0.7.1:
   optionalDependencies:
     "@playwright/test" "1.24.2"
     serve "14.0.1"
+
+svelte-subscribe@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/svelte-subscribe/-/svelte-subscribe-1.0.4.tgz#d527c6c10c41458e6735a6c588c0bb0488e4be98"
+  integrity sha512-Pmf+a0zWxuezigoSJnIyhOIIEArnP++HUzrMozca8LzZZ+sK7z37aKoNj65HR/TGhFZcV6s3bDRxpfiXU7fYOg==
 
 svelte@^3.44.0:
   version "3.49.0"
