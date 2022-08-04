@@ -7,14 +7,10 @@
 	export let columnDefinitionList;
 	export let columnGroupList;
 
-	console.log(dataList);
-
 	let table = new Table(dataList);
 	table.build(pluginMap, columnDefinitionList, columnGroupList);
 
-	const { attributes: tableAttributes, headerRows, bodyAttributes, rows } = table;
-
-	console.log(table.instance);
+	const { attributes: tableAttributes, headerRows, bodyAttributes, currentPageRows } = table;
 </script>
 
 <table {...$tableAttributes}>
@@ -34,7 +30,7 @@
 		{/each}
 	</thead>
 	<tbody {...$bodyAttributes}>
-		{#each $rows as row (row.id)}
+		{#each $currentPageRows as row (row.id)}
 			<Subscribe rowAttributes={row.attrs()} let:rowAttributes>
 				<tr {...rowAttributes}>
 					{#each row.cells as cell (cell.id)}

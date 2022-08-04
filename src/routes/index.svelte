@@ -44,15 +44,31 @@
 
 <section class="workspace">
 	<Splitpanes theme="workspace-theme" style="height: 100%">
-		<Pane size={25} minSize={20}>1<br /><em class="specs">I have a min width of 20%</em></Pane>
-		<Pane size={80} minSize={25}>
-			<ProteinAnnotationTable proteinData={resolvedQuery.data.allProteins} />
+		<Pane size={25} minSize={20} class="workspace__controls">1<br /><em /></Pane>
+		<Pane size={80} minSize={25} class="workspace-grid">
+			<div class="workspace__table">
+				<ProteinAnnotationTable proteinData={resolvedQuery.data.allProteins} />
+			</div>
 		</Pane>
 	</Splitpanes>
 </section>
 
 <style lang="scss">
 	:global {
+		.workspace {
+			height: 100%;
+
+			&__grid {
+				overflow: scroll;
+			}
+			&__table {
+				height: fit-content;
+			}
+		}
+
+		.workspace-grid {
+			overflow: scroll;
+		}
 		.splitpanes.workspace-theme {
 			.splitpanes__pane {
 				background-color: #f2f2f2;
@@ -140,9 +156,5 @@
 				}
 			}
 		}
-	}
-
-	.workspace {
-		height: 100%;
 	}
 </style>

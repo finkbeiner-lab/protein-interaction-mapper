@@ -1,5 +1,5 @@
 import { createTable } from 'svelte-headless-table';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 export class Table {
 	constructor(dataList) {
