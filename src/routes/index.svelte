@@ -25,15 +25,18 @@
 			});
 			if (response.ok) {
 				const resolvedQuery = await response.json();
-				throw new Error(`query resolved to: ${JSON.stringify(resolvedQuery)}`);
+				if (resolvedQuery.hasOwnProperty('errors')) {
+					throw new Error(`query failed: ${JSON.stringify(resolvedQuery)}`);
+				}
+
 				return {
 					props: { resolvedQuery }
 				};
 			} else {
-				throw new Error(`Error requesting protein data /: ${error}`);
+				throw new Error(`protein data request failed : ${error}`);
 			}
 		} catch (error) {
-			throw new Error(`Server error /: ${error}`);
+			throw new Error(`Server could not complete request : ${error}`);
 		}
 	};
 </script>

@@ -1,3 +1,4 @@
+import { useGraphQlJit } from '@envelop/graphql-jit';
 import { createServer } from '@graphql-yoga/common';
 import { PrismaClient } from '@prisma/client';
 
@@ -53,7 +54,7 @@ const serverApp = createServer({
 			}
 		}
 	},
-	plugins: [],
+	plugins: [useGraphQlJit()],
 	context: { prisma: new PrismaClient() },
 	graphiql: {
 		endpoint: '/data/query'
