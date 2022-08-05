@@ -1,7 +1,10 @@
 <script>
 	import Table from './ui/table.svelte';
+	import { proteinAnnotationSerializer } from './data.js';
 
 	export let proteinData;
+
+	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 
 	const annotationColumnDefinitions = [
 		{ name: 'Gene Symbol', id: 'Gene_Symbol', pluginOptions: {}, group: null },
@@ -14,4 +17,4 @@
 	];
 </script>
 
-<Table dataList={proteinData} columnDefinitionList={annotationColumnDefinitions} />
+<Table dataList={serializedProteinData} columnDefinitionList={annotationColumnDefinitions} />
