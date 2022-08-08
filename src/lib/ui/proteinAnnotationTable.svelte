@@ -27,7 +27,7 @@
 			pluginOptions: {
 				group: {
 					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} unique`
+					cell: ({ value }) => `${value} gene symbols`
 				}
 			},
 			group: null
@@ -38,7 +38,7 @@
 			pluginOptions: {
 				group: {
 					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} unique`
+					cell: ({ value }) => `${value} names`
 				}
 			},
 			group: null
@@ -49,7 +49,7 @@
 			pluginOptions: {
 				group: {
 					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} unique`
+					cell: ({ value }) => `${value} branches`
 				}
 			},
 			group: null
@@ -60,7 +60,7 @@
 			pluginOptions: {
 				group: {
 					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} unique`
+					cell: ({ value }) => `${value} groups`
 				}
 			},
 			group: null
@@ -71,7 +71,7 @@
 			pluginOptions: {
 				group: {
 					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} unique`
+					cell: ({ value }) => `${value} subgroups`
 				}
 			},
 			group: null
@@ -82,7 +82,7 @@
 			pluginOptions: {
 				group: {
 					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} unique`
+					cell: ({ value }) => `${value} types`
 				}
 			},
 			group: null
@@ -93,7 +93,7 @@
 			pluginOptions: {
 				group: {
 					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} unique`
+					cell: ({ value }) => `${value} UniProt IDs`
 				}
 			},
 			group: null

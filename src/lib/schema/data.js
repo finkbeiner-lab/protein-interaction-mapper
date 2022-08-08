@@ -1,6 +1,11 @@
 export function proteinAnnotationSerializer(dataList, delimiterCharacter) {
 	let serializedDataList = [];
 	for (const uniqueRow of dataList) {
+		Object.keys(uniqueRow).forEach((key) => {
+			if (!uniqueRow[key]) {
+				uniqueRow[key] = '';
+			}
+		});
 		let valueNameList = Object.keys(uniqueRow);
 		let multipleValuePositionMap = {};
 		let valuePositionMap = {};
@@ -39,9 +44,18 @@ export function proteinAnnotationSerializer(dataList, delimiterCharacter) {
 					(field) => !valuesInRangeIndices.includes(valuePositionMap[field])
 				);
 				const rowValues = [...constantValues, ...valuesInRange];
+				let missingFields = [...valueNameList];
+
 				for (const value of rowValues) {
-					serializedDataList[currentDataIndex][valueNameList[valuePositionMap[value]]] = value;
+					const field = valueNameList[valuePositionMap[value]];
+					serializedDataList[currentDataIndex][field] = value;
+					missingFields.splice(missingFields.indexOf(field), 1);
 				}
+
+				for (const field of missingFields) {
+					serializedDataList[currentDataIndex][field] = '';
+				}
+
 				currentDataIndex = serializedDataList.length - 1;
 			}
 		} else {
