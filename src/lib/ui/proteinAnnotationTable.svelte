@@ -141,7 +141,12 @@
 				<tr {...headerAttributes}>
 					{#each headerRow.cells as cell (cell.id)}
 						<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
-							<th {...attrs} on:click={props.sort.toggle}>
+							<th
+								{...attrs}
+								on:click={props.sort.toggle}
+								class:header__column-descending={(props.sort.order === 'desc') | !props.sort.order}
+								class:header__column-ascending={props.sort.order === 'asc'}
+							>
 								<Render of={cell.render()} />
 								{#if props.sort.order === 'asc'}
 									⬇️
@@ -207,7 +212,18 @@
 		padding: 0.5rem;
 	}
 
+	.header {
+		&__column-descending {
+			cursor: s-resize;
+		}
+
+		&__column-ascending {
+			cursor: n-resize;
+		}
+	}
+
 	.groupButton {
+		cursor: pointer;
 		display: block;
 		margin: 0 auto;
 	}
