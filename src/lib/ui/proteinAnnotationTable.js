@@ -1,5 +1,4 @@
-import { createTable } from 'svelte-headless-table';
-import { createRender } from 'svelte-headless-table';
+import { createTable, createRender } from 'svelte-headless-table';
 import { writable } from 'svelte/store';
 
 import TableExpandIndicator from './tableExpandIndicator.svelte';
@@ -17,31 +16,43 @@ export class ProteinAnnotationTable {
 		this.instance = createTable(this.dataListStore, pluginMap);
 
 		let columns;
-		this.instance.createColumns([
-			this.instance.display({
-				id: 'expanded',
-				header: '',
-				cell: ({ row }, { pluginStates }) => {
-					const { isExpanded, canExpand, isAllSubRowsExpanded } =
-						pluginStates.expand.getRowState(row);
-					return createRender(TableExpandIndicator, {
-						depth: row.depth,
-						isExpanded,
-						canExpand,
-						isAllSubRowsExpanded
-					});
-				}
-			})
-		]);
 		if (columnGroupList <= 0) {
-			columns = this.instance.createColumns(
-				columnDefinitionList.map(({ name, id, pluginOptions }) => {
+			columns = this.instance.createColumns([
+				this.instance.display({
+					id: 'expanded',
+					header: '',
+					cell: ({ row }, { pluginStates }) => {
+						const { isExpanded, canExpand, isAllSubRowsExpanded } =
+							pluginStates.expand.getRowState(row);
+						return createRender(TableExpandIndicator, {
+							depth: row.depth,
+							isExpanded,
+							canExpand,
+							isAllSubRowsExpanded
+						});
+					}
+				}),
+				...columnDefinitionList.map(({ name, id, pluginOptions }) => {
 					return this.instance.column({ header: name, accessor: id, plugins: pluginOptions });
 				})
-			);
+			]);
 		} else {
-			columns = this.instance.createColumns(
-				columnGroupList.map((groupName) => {
+			columns = this.instance.createColumns([
+				this.instance.display({
+					id: 'expanded',
+					header: '',
+					cell: ({ row }, { pluginStates }) => {
+						const { isExpanded, canExpand, isAllSubRowsExpanded } =
+							pluginStates.expand.getRowState(row);
+						return createRender(TableExpandIndicator, {
+							depth: row.depth,
+							isExpanded,
+							canExpand,
+							isAllSubRowsExpanded
+						});
+					}
+				}),
+				...columnGroupList.map((groupName) => {
 					return this.instance.group({
 						header: groupName,
 						columns: columnDefinitionList
@@ -51,7 +62,7 @@ export class ProteinAnnotationTable {
 							})
 					});
 				})
-			);
+			]);
 		}
 
 		const viewModel = this.instance.createViewModel(columns);
