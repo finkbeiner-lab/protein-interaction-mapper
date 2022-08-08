@@ -50,8 +50,8 @@
 
 <section class="workspace">
 	<Splitpanes theme="workspace-theme" style="height: 100%">
-		<Pane size={25} minSize={20} class="workspace__controls">1<br /><em /></Pane>
-		<Pane size={80} minSize={25} class="workspace__grid">
+		<Pane size={20} minSize={20} class="workspace__controls">1<br /><em /></Pane>
+		<Pane size={85} minSize={25} class="workspace__grid">
 			<div class="workspace__table">
 				<ProteinAnnotationTable proteinData={resolvedQuery.data.allProteins} />
 			</div>
