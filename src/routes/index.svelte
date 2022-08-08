@@ -42,7 +42,7 @@
 </script>
 
 <script>
-	import ProteinAnnotationTable from '$lib/proteinAnnotationTable.svelte';
+	import ProteinAnnotationTable from '$lib/ui/proteinAnnotationTable.svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
 
 	export let resolvedQuery;

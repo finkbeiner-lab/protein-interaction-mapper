@@ -47,6 +47,13 @@ This enumeration method is a work-in-progress, and will be updated as new inform
     npm install && npm run dev
     ```
 
+    [svelte-headless-table must be manually cloned & linked, from outside this repo](https://github.com/bryanmylee/svelte-headless-table/issues/29)
+
+    ```bash
+    npm install && npm run package
+    cd {protein-interaction-mapper} && npm link {package directory}
+    ```
+
 3. Open a pull request to merge into the `develop` branch with your contribution. We will review it & provide feedback shortly!
 
 ## Building

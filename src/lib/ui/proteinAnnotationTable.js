@@ -1,7 +1,10 @@
 import { createTable } from 'svelte-headless-table';
+import { createRender } from 'svelte-headless-table';
 import { writable } from 'svelte/store';
 
-export class Table {
+import TableExpandIndicator from './tableExpandIndicator.svelte';
+
+export class ProteinAnnotationTable {
 	constructor(dataList) {
 		this.dataListStore = writable(dataList);
 	}
@@ -14,6 +17,22 @@ export class Table {
 		this.instance = createTable(this.dataListStore, pluginMap);
 
 		let columns;
+		this.instance.createColumns([
+			this.instance.display({
+				id: 'expanded',
+				header: '',
+				cell: ({ row }, { pluginStates }) => {
+					const { isExpanded, canExpand, isAllSubRowsExpanded } =
+						pluginStates.expand.getRowState(row);
+					return createRender(TableExpandIndicator, {
+						depth: row.depth,
+						isExpanded,
+						canExpand,
+						isAllSubRowsExpanded
+					});
+				}
+			})
+		]);
 		if (columnGroupList <= 0) {
 			columns = this.instance.createColumns(
 				columnDefinitionList.map(({ name, id, pluginOptions }) => {

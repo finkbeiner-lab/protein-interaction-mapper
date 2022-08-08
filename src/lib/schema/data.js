@@ -49,7 +49,6 @@ export function proteinAnnotationSerializer(dataList, delimiterCharacter) {
 			serializedDataList[currentDataIndex] = uniqueRow;
 		}
 	}
-	console.log(serializedDataList);
 
 	return serializedDataList;
 }
