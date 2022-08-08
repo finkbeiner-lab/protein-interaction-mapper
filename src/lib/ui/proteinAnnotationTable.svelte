@@ -5,7 +5,8 @@
 		addGroupBy,
 		addExpandedRows,
 		addColumnOrder,
-		addSortBy
+		addSortBy,
+		addTableFilter
 	} from 'svelte-headless-table/plugins';
 	import { proteinAnnotationSerializer } from '$lib/schema/data';
 
@@ -17,7 +18,16 @@
 		sort: addSortBy(),
 		group: addGroupBy(),
 		expand: addExpandedRows(),
-		colOrder: addColumnOrder()
+		colOrder: addColumnOrder(),
+		tableFilter: addTableFilter({
+			fn: ({ filterValue, value }) => {
+				if (value.includes(filterValue)) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		})
 	};
 
 	const columnDefinitionList = [
@@ -30,7 +40,7 @@
 					cell: ({ value }) => `${value} gene symbols`
 				}
 			},
-			group: null
+			columnGroup: null
 		},
 		{
 			name: 'Name',
@@ -41,7 +51,7 @@
 					cell: ({ value }) => `${value} names`
 				}
 			},
-			group: null
+			columnGroup: null
 		},
 		{
 			name: 'Branch',
@@ -52,7 +62,7 @@
 					cell: ({ value }) => `${value} branches`
 				}
 			},
-			group: null
+			columnGroup: null
 		},
 		{
 			name: 'Group',
@@ -63,7 +73,7 @@
 					cell: ({ value }) => `${value} groups`
 				}
 			},
-			group: null
+			columnGroup: null
 		},
 		{
 			name: 'Subgroup',
@@ -74,7 +84,7 @@
 					cell: ({ value }) => `${value} subgroups`
 				}
 			},
-			group: null
+			columnGroup: null
 		},
 		{
 			name: 'Type',
@@ -85,7 +95,7 @@
 					cell: ({ value }) => `${value} types`
 				}
 			},
-			group: null
+			columnGroup: null
 		},
 		{
 			name: 'UniProt ID',
@@ -96,7 +106,7 @@
 					cell: ({ value }) => `${value} UniProt IDs`
 				}
 			},
-			group: null
+			columnGroup: null
 		}
 	];
 
@@ -111,10 +121,17 @@
 
 	console.log(table);
 
-	const { attributes: tableAttributes, headerRows, bodyAttributes, currentPageRows } = table;
+	const {
+		attributes: tableAttributes,
+		headerRows,
+		bodyAttributes,
+		currentPageRows,
+		visibleColumns
+	} = table;
 
 	const { sortKeys } = table.pluginStates.sort;
 	const { groupByIds } = table.pluginStates.group;
+	const { filterValue } = table.pluginStates.tableFilter;
 </script>
 
 <table {...$tableAttributes}>
@@ -146,6 +163,11 @@
 				</tr>
 			</Subscribe>
 		{/each}
+		<tr>
+			<th colspan={$visibleColumns.length}>
+				<input type="text" bind:value={$filterValue} placeholder="Search..." />
+			</th>
+		</tr>
 	</thead>
 	<tbody {...$bodyAttributes}>
 		{#each $currentPageRows as row (row.id)}
