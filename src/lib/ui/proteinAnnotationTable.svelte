@@ -205,11 +205,16 @@
 		border-left: 1px solid black;
 	}
 
+	th {
+		white-space: nowrap;
+	}
+
 	th,
 	td {
 		border-bottom: 1px solid black;
 		border-right: 1px solid black;
 		padding: 0.5rem;
+		min-width: fit-content;
 	}
 
 	.header {
@@ -225,7 +230,7 @@
 	.groupButton {
 		cursor: pointer;
 		display: block;
-		margin: 0 auto;
+		margin: 0.25rem auto;
 	}
 
 	.group {
