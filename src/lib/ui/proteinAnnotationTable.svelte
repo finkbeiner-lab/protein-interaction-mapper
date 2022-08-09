@@ -144,8 +144,9 @@
 							<th
 								{...attrs}
 								on:click={props.sort.toggle}
-								class:header__column-descending={(props.sort.order === 'desc') | !props.sort.order}
+								class:header__column-descending={props.sort.order === 'desc'}
 								class:header__column-ascending={props.sort.order === 'asc'}
+								class:header__column={!props.sort.order}
 							>
 								<Render of={cell.render()} />
 								{#if props.sort.order === 'asc'}
@@ -218,6 +219,9 @@
 	}
 
 	.header {
+		&__column {
+			cursor: ns-resize;
+		}
 		&__column-descending {
 			cursor: s-resize;
 		}
