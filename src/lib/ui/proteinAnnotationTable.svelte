@@ -21,7 +21,7 @@
 		colOrder: addColumnOrder(),
 		tableFilter: addTableFilter({
 			fn: ({ filterValue, value }) => {
-				if (value.includes(filterValue)) {
+				if (value.toLocaleLowerCase().includes(filterValue.toLocaleLowerCase())) {
 					return true;
 				} else {
 					return false;
