@@ -36,8 +36,7 @@
 			id: 'Gene_Symbol',
 			pluginOptions: {
 				group: {
-					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} gene symbols`
+					disable: true
 				}
 			},
 			columnGroup: null
@@ -47,8 +46,7 @@
 			id: 'Name',
 			pluginOptions: {
 				group: {
-					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} names`
+					disable: true
 				}
 			},
 			columnGroup: null
@@ -102,8 +100,7 @@
 			id: 'UniProt_ID',
 			pluginOptions: {
 				group: {
-					getAggregateValue: (values) => getDistinct(values).length,
-					cell: ({ value }) => `${value} UniProt IDs`
+					disable: true
 				}
 			},
 			columnGroup: null
@@ -118,8 +115,6 @@
 
 	let table = new ProteinAnnotationTable(serializedProteinData);
 	table.build(pluginMap, columnDefinitionList, columnGroupList);
-
-	console.log(table);
 
 	const {
 		attributes: tableAttributes,
