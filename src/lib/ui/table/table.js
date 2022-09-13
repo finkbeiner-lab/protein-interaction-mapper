@@ -3,9 +3,17 @@ import { writable } from 'svelte/store';
 
 import TableExpandIndicator from './tableExpandIndicator.svelte';
 
-export class ProteinAnnotationTable {
-	constructor(dataList) {
+// { name: viewModel }
+export const store = writable({});
+
+export class Table {
+	constructor(dataList, name) {
 		this.dataListStore = writable(dataList);
+		this.name = name;
+	}
+
+	update(tableEntry) {
+		store.update((existingTables) => ({ ...existingTables, ...tableEntry }));
 	}
 
 	build(
@@ -79,5 +87,7 @@ export class ProteinAnnotationTable {
 		this.visibleColumns = viewModel.visibleColumns;
 
 		this.pluginStates = viewModel.pluginStates;
+
+		this.update({ [this.name]: this });
 	}
 }

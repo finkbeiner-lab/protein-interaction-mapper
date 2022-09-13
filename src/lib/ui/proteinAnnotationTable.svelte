@@ -1,5 +1,5 @@
 <script>
-	import { ProteinAnnotationTable } from '$lib/ui/proteinAnnotationTable.js';
+	import { Table } from '$lib/ui/table/table.js';
 	import { Subscribe, Render } from 'svelte-headless-table';
 	import {
 		addGroupBy,
@@ -113,7 +113,7 @@
 
 	const columnGroupList = [];
 
-	let table = new ProteinAnnotationTable(serializedProteinData);
+	export let table = new Table(serializedProteinData, 'proteinAnnotation');
 	table.build(pluginMap, columnDefinitionList, columnGroupList);
 
 	const {
