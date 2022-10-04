@@ -6,7 +6,8 @@
 		addExpandedRows,
 		addColumnOrder,
 		addSortBy,
-		addTableFilter
+		addTableFilter,
+		addColumnFilters
 	} from 'svelte-headless-table/plugins';
 	import { proteinAnnotationSerializer } from '$lib/schema/data';
 
@@ -14,20 +15,23 @@
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 
+	const caseInsensitiveSearch = ({ filterValue, value }) => {
+		if (value.toLocaleLowerCase().includes(filterValue.toLocaleLowerCase())) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
 	const pluginMap = {
 		sort: addSortBy(),
 		group: addGroupBy(),
 		expand: addExpandedRows(),
 		colOrder: addColumnOrder(),
 		tableFilter: addTableFilter({
-			fn: ({ filterValue, value }) => {
-				if (value.toLocaleLowerCase().includes(filterValue.toLocaleLowerCase())) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		})
+			fn: caseInsensitiveSearch
+		}),
+		columnFilter: addColumnFilters({ fn: caseInsensitiveSearch })
 	};
 
 	const columnDefinitionList = [
@@ -58,6 +62,17 @@
 				group: {
 					getAggregateValue: (values) => getDistinct(values).length,
 					cell: ({ value }) => `${value} branches`
+				}
+			},
+			columnGroup: null
+		},
+		{
+			name: 'Class',
+			id: 'Class',
+			pluginOptions: {
+				group: {
+					getAggregateValue: (values) => getDistinct(values).length,
+					cell: ({ value }) => `${value} classes`
 				}
 			},
 			columnGroup: null
@@ -111,10 +126,8 @@
 		return Array.from(new Set(items));
 	};
 
-	const columnGroupList = [];
-
 	export let table = new Table(serializedProteinData, 'proteinAnnotation');
-	table.build(pluginMap, columnDefinitionList, columnGroupList);
+	table.build(pluginMap, columnDefinitionList);
 
 	const {
 		attributes: tableAttributes,

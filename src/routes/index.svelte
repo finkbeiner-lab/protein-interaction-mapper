@@ -13,6 +13,7 @@
 								Gene_Symbol
 								Name
 								Branch
+								Class
 								Group
 								Subgroup
 								Type
