@@ -32,7 +32,6 @@
 		"sass": "^1.54.1",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
-		"svelte-grid": "^5.1.1",
 		"svelte-headless-table": "^0.12.2",
 		"svelte-preprocess": "^4.10.6",
 		"tslib": "^2.3.1",
@@ -48,6 +47,7 @@
 		"@prisma/client": "^4.1.1",
 		"graphql": "^16.5.0",
 		"graphql-scalars": "^1.17.0",
-		"svelte-splitpanes": "^0.7.1"
+		"svelte-splitpanes": "^0.7.1",
+		"svelte-grid": "^5.1.1"
 	}
 }

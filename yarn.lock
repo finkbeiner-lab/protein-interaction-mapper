@@ -1991,7 +1991,7 @@
   "resolved" "https://registry.npmjs.org/svelte-grid/-/svelte-grid-5.1.1.tgz"
   "version" "5.1.1"
 
-"svelte-headless-table@file:../svelte-headless-table/package":
+"svelte-headless-table@^0.12.2":
   "resolved" "file:../svelte-headless-table/package"
   "version" "0.12.2"
   dependencies:
