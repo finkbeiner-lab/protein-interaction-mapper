@@ -47,7 +47,8 @@
 		"@prisma/client": "^4.1.1",
 		"graphql": "^16.5.0",
 		"graphql-scalars": "^1.17.0",
-		"svelte-splitpanes": "^0.7.1",
-		"svelte-grid": "^5.1.1"
+		"plotly.js-dist-min": "^2.14.0",
+		"svelte-grid": "^5.1.1",
+		"svelte-splitpanes": "^0.7.1"
 	}
 }

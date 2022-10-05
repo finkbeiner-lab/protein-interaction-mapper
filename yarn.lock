@@ -1623,6 +1623,11 @@
   "resolved" "https://registry.npmjs.org/playwright-core/-/playwright-core-1.24.2.tgz"
   "version" "1.24.2"
 
+"plotly.js-dist-min@^2.14.0":
+  "integrity" "sha512-Fq4o/PNLUuDQqw2ovc3Ip/s9t+Ww1h+exvd9qmvUoZKgPn/Tm8H4CyOrDadmtBJP+EtcG4ZZoI2ZJR/1nBvgfQ=="
+  "resolved" "https://registry.npmjs.org/plotly.js-dist-min/-/plotly.js-dist-min-2.14.0.tgz"
+  "version" "2.14.0"
+
 "postcss@^7 || ^8", "postcss@^8.4.14":
   "integrity" "sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig=="
   "resolved" "https://registry.npmjs.org/postcss/-/postcss-8.4.14.tgz"

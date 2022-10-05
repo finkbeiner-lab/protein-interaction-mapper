@@ -48,17 +48,49 @@
 
 	import ProteinAnnotationTable from '$lib/ui/proteinAnnotationTable.svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
+	import TreeMap from '$lib/ui/plot/treeMap.svelte';
+	import { onMount, createEventDispatcher } from 'svelte';
 
 	export let resolvedQuery;
-	let table;
+	let table, workspace, workspaceSize;
+
+	function updateWorkspaceSize(dimensions) {
+		workspaceSize = {
+			control: dimensions.detail[0].size,
+			view: dimensions.detail[1].size
+		};
+	}
+
+	let currentSize;
+	onMount(() => {
+		// default dimensions
+		currentSize = { width: workspace.clientWidth, height: workspace.clientHeight };
+		workspaceSize = { control: 20, view: 85 };
+		const resizeObserver = new ResizeObserver((entries) => {
+			// We're only watching one element
+			const entry = entries.at(0);
+
+			//Get the block size
+			currentSize = {
+				width: entry.contentRect.width,
+				height: entry.contentRect.height
+			};
+		});
+
+		resizeObserver.observe(workspace);
+
+		// This callback cleans up the observer
+		return () => resizeObserver.unobserve(workspace);
+	});
 </script>
 
-<section class="workspace">
-	<Splitpanes theme="workspace-theme" style="height: 100%">
+<section class="workspace" bind:this={workspace}>
+	<Splitpanes theme="workspace-theme" style="height: 100%" on:resize={updateWorkspaceSize}>
 		<Pane size={20} minSize={20} class="workspace__controls">
 			<TableControl table={$tableStore.proteinAnnotation} />
-		</Pane><br /><em />
-		<Pane size={85} minSize={25} class="workspace__grid">
+			<TreeMap parentSize={currentSize} {workspaceSize} />
+		</Pane>
+		<Pane size={80} minSize={25} class="workspace__grid">
 			<div class="workspace__table">
 				<ProteinAnnotationTable bind:table proteinData={resolvedQuery.data.allProteins} />
 			</div>
