@@ -1,5 +1,6 @@
 <script>
 	import { Table } from '$lib/ui/table/table.js';
+	import { get } from 'svelte/store';
 	import { Subscribe, Render } from 'svelte-headless-table';
 	import {
 		addGroupBy,
@@ -27,7 +28,18 @@
 		sort: addSortBy(),
 		group: addGroupBy(),
 		expand: addExpandedRows(),
-		colOrder: addColumnOrder(),
+		colOrder: addColumnOrder({
+			initialColumnIdOrder: [
+				'Name',
+				'Gene_Symbol',
+				'Branch',
+				'Class',
+				'Group',
+				'Subgroup',
+				'Type',
+				'UniProt_ID'
+			]
+		}),
 		tableFilter: addTableFilter({
 			fn: caseInsensitiveSearch
 		}),

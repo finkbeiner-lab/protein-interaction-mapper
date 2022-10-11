@@ -2,12 +2,10 @@
 	import { onMount, beforeUpdate, afterUpdate } from 'svelte';
 	export let parentSize, workspaceSize;
 	let doResize = false;
-	let oldSize;
-
-	let treeMap;
+	let oldSize, treeMap, Plotly;
 
 	onMount(async () => {
-		const Plotly = await import('plotly.js-dist-min');
+		Plotly = await import('plotly.js-dist-min');
 
 		// export let labels, parents, values;
 
@@ -40,7 +38,6 @@
 
 		var config = { responsive: true, displayModeBar: false };
 
-		console.log(treeMap);
 		Plotly.react(treeMap, data, layout, config);
 	});
 
@@ -49,14 +46,12 @@
 	});
 
 	afterUpdate(async () => {
-		const Plotly = await import('plotly.js-dist-min');
-		if (doResize) {
+		if (doResize && Plotly) {
 			const scaleFactor = parentSize.width / (parentSize.width * 0.6 - Math.sqrt(parentSize.width));
 			const containerProportion = workspaceSize.control / 100;
 			const update = {
-				width: parentSize.width * containerProportion * scaleFactor
+				width: Math.floor(parentSize.width * containerProportion * scaleFactor)
 			};
-			console.log(update);
 			if (update) Plotly.relayout(treeMap, update);
 			oldSize = workspaceSize;
 		}

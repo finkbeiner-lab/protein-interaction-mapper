@@ -43,13 +43,13 @@
 </script>
 
 <script>
-	import TableControl from '$lib/ui/table/tableControl.svelte';
+	import ColumnFilter from '$lib/ui/table/columnFilter.svelte';
 	import { store as tableStore } from '$lib/ui/table/table.js';
 
 	import ProteinAnnotationTable from '$lib/ui/proteinAnnotationTable.svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
 	import TreeMap from '$lib/ui/plot/treeMap.svelte';
-	import { onMount, createEventDispatcher } from 'svelte';
+	import { onMount } from 'svelte';
 
 	export let resolvedQuery;
 	let table, workspace, workspaceSize;
@@ -87,8 +87,14 @@
 <section class="workspace" bind:this={workspace}>
 	<Splitpanes theme="workspace-theme" style="height: 100%" on:resize={updateWorkspaceSize}>
 		<Pane size={20} minSize={20} class="workspace__controls">
-			<TableControl table={$tableStore.proteinAnnotation} />
-			<TreeMap parentSize={currentSize} {workspaceSize} />
+			{#if $tableStore.proteinAnnotation}
+				<div class="workspace__treeMap" charset="utf-8">
+					<ColumnFilter table={$tableStore.proteinAnnotation} />
+				</div>
+				<div class="workspace__treeMap" charset="utf-8">
+					<TreeMap parentSize={currentSize} {workspaceSize} />
+				</div>
+			{/if}
 		</Pane>
 		<Pane size={80} minSize={25} class="workspace__grid">
 			<div class="workspace__table">
