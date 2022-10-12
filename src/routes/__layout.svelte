@@ -1,4 +1,4 @@
-<script lang="typescript">
+<script lang="ts">
 	import '@fontsource/recursive/900.css';
 	import '@fontsource/recursive/300.css';
 

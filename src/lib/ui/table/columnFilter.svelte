@@ -8,9 +8,9 @@
 	const { item } = gridHelp;
 
 	export let table;
-	let tableState, filterItems;
+	let tableState, filterItems, filterContainer;
 
-	function positionGridItem(width, height, index, columnBreakpoints = [1, 2]) {
+	function positionGridItem(width, height, index, columnBreakpoints = [1, 2, 4]) {
 		const yScaleFactor = height;
 		const xScaleFactor = width;
 		return Object.fromEntries(
@@ -54,57 +54,20 @@
 		loadTableState(table);
 	});
 
-	let items = [
-		{
-			id: '1',
-			5: item({
-				x: 0,
-				y: 0,
-				w: 2,
-				h: 2
-			}),
-			3: item({ x: 0, y: 0, w: 1, h: 2 }),
-			1: item({ x: 0, y: 0, w: 1, h: 1 })
-		},
-
-		{
-			id: '2',
-			5: item({
-				x: 2,
-				y: 0,
-				w: 2,
-				h: 2
-			}),
-			3: item({ x: 1, y: 0, w: 1, h: 2 }),
-			1: item({ x: 0, y: 1, w: 1, h: 1 })
-		},
-
-		{
-			id: '3',
-			5: item({
-				x: 0,
-				y: 2,
-				w: 2,
-				h: 2
-			}),
-			3: item({ x: 0, y: 2, w: 1, h: 2 }),
-			1: item({ x: 0, y: 2, w: 1, h: 1 })
-		}
-	];
-
 	// [breakpoint, x-coordinate]
 	const cols = [
 		[1100, 5],
-		[1000, 2],
-		[500, 1]
+		[300, 2],
+		[100, 1]
 	];
 </script>
 
 {#if filterItems}
-	<div class="demo-container size">
+	<div class="filterContainer" bind:this={filterContainer}>
 		<Grid
 			bind:items={filterItems}
 			rowHeight={100}
+			scroller={filterContainer}
 			let:item
 			let:dataItem
 			{cols}
@@ -119,9 +82,10 @@
 	</div>
 
 	<style>
-		.size {
+		.filterContainer {
 			max-width: 1100px;
-			width: 100%;
+			width: auto;
+			max-height: fit-content;
 		}
 	</style>
 {/if}
