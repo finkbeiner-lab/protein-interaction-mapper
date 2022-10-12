@@ -85,8 +85,13 @@
 </script>
 
 <section class="workspace" bind:this={workspace}>
-	<Splitpanes theme="workspace-theme" style="height: 100%" on:resize={updateWorkspaceSize}>
-		<Pane size={20} minSize={20} class="workspace__controls">
+	<Splitpanes
+		theme="workspace-theme"
+		style="height: 100%"
+		on:resize={updateWorkspaceSize}
+		dblClickSplitter={true}
+	>
+		<Pane size={20} minSize={0} class="workspace__controls">
 			{#if $tableStore.proteinAnnotation}
 				<div class="workspace__treeMap" charset="utf-8">
 					<ColumnFilter table={$tableStore.proteinAnnotation} />

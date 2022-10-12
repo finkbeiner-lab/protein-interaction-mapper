@@ -8,19 +8,19 @@
 	const { item } = gridHelp;
 
 	export let table;
-	let tableState, filterItems, filterContainer;
+	let tableState, filterItems;
 
-	function positionGridItem(width, height, index, columnBreakpoints = [1, 2, 4]) {
+	function positionGridItem(width, height, index, columnBreakpoints = [2, 4]) {
 		const yScaleFactor = height;
 		const xScaleFactor = width;
 		return Object.fromEntries(
 			columnBreakpoints.map((breakpoint) => {
-				console.log((index % breakpoint) * xScaleFactor);
+				console.log(index / yScaleFactor);
 				return [
 					breakpoint,
 					item({
-						x: (index % breakpoint) * xScaleFactor,
-						y: index * yScaleFactor,
+						x: (index % breakpoint) * xScaleFactor ? breakpoint > xScaleFactor : 0,
+						y: index * breakpoint ? breakpoint / xScaleFactor > yScaleFactor : 0,
 						w: xScaleFactor,
 						h: yScaleFactor
 					})
@@ -63,11 +63,10 @@
 </script>
 
 {#if filterItems}
-	<div class="filterContainer" bind:this={filterContainer}>
+	<div class="filterContainer">
 		<Grid
 			bind:items={filterItems}
 			rowHeight={100}
-			scroller={filterContainer}
 			let:item
 			let:dataItem
 			{cols}
@@ -85,7 +84,9 @@
 		.filterContainer {
 			max-width: 1100px;
 			width: auto;
-			max-height: fit-content;
+			height: fit-content;
+			max-height: 444px;
+			overflow: scroll;
 		}
 	</style>
 {/if}
