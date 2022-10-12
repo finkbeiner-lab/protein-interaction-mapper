@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - 'production'
-env:
-  FLY_ACCESS_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
 jobs:
   deploy:
     name: Deploy app
@@ -12,4 +10,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
+      - run: flyctl deploy --remote-only --access-token ${{ secrets.FLY_ACCESS_TOKEN }}
