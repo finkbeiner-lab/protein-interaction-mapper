@@ -52,7 +52,7 @@
 			const update = {
 				width: Math.floor(parentSize.width * containerProportion * scaleFactor)
 			};
-			if (update) Plotly.relayout(treeMap, update);
+			Plotly.relayout(treeMap, update);
 			oldSize = workspaceSize;
 		}
 	});

@@ -1,26 +1,25 @@
 <script>
-	import { NoSchemaIntrospectionCustomRule } from 'graphql';
 	import { onMount } from 'svelte';
 	import Grid from 'svelte-grid';
 	import gridHelp from 'svelte-grid/build/helper/index.mjs';
 	import { get } from 'svelte/store';
+	import ColumnFilter from './columnFilter.svelte';
 
 	const { item } = gridHelp;
 
 	export let table;
 	let tableState, filterItems;
 
-	function positionGridItem(width, height, index, columnBreakpoints = [2, 4]) {
+	function positionGridItem(width, height, index, columnBreakpoints = [1, 4]) {
 		const yScaleFactor = height;
 		const xScaleFactor = width;
 		return Object.fromEntries(
 			columnBreakpoints.map((breakpoint) => {
-				console.log(index / yScaleFactor);
 				return [
 					breakpoint,
 					item({
-						x: (index % breakpoint) * xScaleFactor ? breakpoint > xScaleFactor : 0,
-						y: index * breakpoint ? breakpoint / xScaleFactor > yScaleFactor : 0,
+						x: (index % breakpoint) * xScaleFactor,
+						y: index * breakpoint,
 						w: xScaleFactor,
 						h: yScaleFactor
 					})
@@ -31,22 +30,18 @@
 
 	function loadTableState(table) {
 		tableState = get(table.headerRows)[0].state;
-		console.log(tableState.columns);
+		console.log(get(tableState.pluginStates.colOrder.columnIdOrder));
 
-		filterItems = tableState.columns
-			.filter((column) => {
-				return column.header != '';
-			})
-			.map((column, index) => {
-				const filterItemHeight = 1;
-				const filterItemWidth = 2;
-				const calculatePosition = (column, filterItemHeight, filterItemWidth) => ({
-					id: column.header,
-					...positionGridItem(filterItemWidth, filterItemHeight, index)
-				}); // anonymous fxn with column as arg
-				return calculatePosition(column, filterItemHeight, filterItemWidth);
-			});
-		console.log(filterItems);
+		filterItems = get(tableState.pluginStates.colOrder.columnIdOrder).map((column, index) => {
+			const filterItemHeight = 1;
+			const filterItemWidth = 2;
+			const calculatePosition = (column, filterItemHeight, filterItemWidth) => ({
+				id: column,
+				tableHook: tableState.pluginStates,
+				...positionGridItem(filterItemWidth, filterItemHeight, index)
+			}); // anonymous fxn with column as arg
+			return calculatePosition(column, filterItemHeight, filterItemWidth);
+		});
 		return;
 	}
 
@@ -57,17 +52,15 @@
 	// [breakpoint, x-coordinate]
 	const cols = [
 		[1100, 5],
-		[300, 2],
-		[100, 1]
+		[200, 1]
 	];
 </script>
 
 {#if filterItems}
-	<div class="filterContainer">
+	<div class="container">
 		<Grid
 			bind:items={filterItems}
 			rowHeight={100}
-			let:item
 			let:dataItem
 			{cols}
 			fastStart={true}
@@ -75,13 +68,16 @@
 			on:change={(e) => {
 				console.log(e.detail);
 			}}
+			on:resize={(e) => {
+				console.log(e.detail);
+			}}
 		>
-			<div class="demo-widget">{dataItem.id}</div>
+			<ColumnFilter id={dataItem.id} tableHook={tableState} />
 		</Grid>
 	</div>
 
 	<style>
-		.filterContainer {
+		.container {
 			max-width: 1100px;
 			width: auto;
 			height: fit-content;

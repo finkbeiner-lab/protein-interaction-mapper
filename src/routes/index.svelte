@@ -43,7 +43,7 @@
 </script>
 
 <script>
-	import ColumnFilter from '$lib/ui/table/columnFilter.svelte';
+	import ColumnFilter from '$lib/ui/control/filterGrid.svelte';
 	import { store as tableStore } from '$lib/ui/table/table.js';
 
 	import ProteinAnnotationTable from '$lib/ui/proteinAnnotationTable.svelte';
