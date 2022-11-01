@@ -9,6 +9,7 @@
 
 	export let table;
 	let tableState, filterItems;
+	console.log(tableState);
 
 	function positionGridItem(width, height, index, columnBreakpoints = [1, 4]) {
 		const yScaleFactor = height;
@@ -30,7 +31,6 @@
 
 	function loadTableState(table) {
 		tableState = get(table.headerRows)[0].state;
-		console.log(get(tableState.pluginStates.colOrder.columnIdOrder));
 
 		filterItems = get(tableState.pluginStates.colOrder.columnIdOrder).map((column, index) => {
 			const filterItemHeight = 1;
@@ -39,7 +39,7 @@
 				id: column,
 				tableHook: tableState.pluginStates,
 				...positionGridItem(filterItemWidth, filterItemHeight, index)
-			}); // anonymous fxn with column as arg
+			});
 			return calculatePosition(column, filterItemHeight, filterItemWidth);
 		});
 		return;
@@ -72,7 +72,7 @@
 				console.log(e.detail);
 			}}
 		>
-			<ColumnFilter id={dataItem.id} tableHook={tableState} />
+			<ColumnFilter tableHook={tableState} />
 		</Grid>
 	</div>
 

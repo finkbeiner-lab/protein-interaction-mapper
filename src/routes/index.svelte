@@ -44,12 +44,14 @@
 
 <script>
 	import ColumnFilter from '$lib/ui/control/filterGrid.svelte';
-	import { store as tableStore } from '$lib/ui/table/table.js';
 
-	import ProteinAnnotationTable from '$lib/ui/proteinAnnotationTable.svelte';
+	import ProteinAnnotationTable from '$lib/ui/table/proteinAnnotationTable.svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
 	import TreeMap from '$lib/ui/plot/treeMap.svelte';
 	import { onMount } from 'svelte';
+
+	import { tableStore } from '$lib/ui/table/proteinAnnotationTable.svelte';
+	import { get } from 'svelte/store';
 
 	export let resolvedQuery;
 	let table, workspace, workspaceSize;
@@ -70,7 +72,7 @@
 			// We're only watching one element
 			const entry = entries.at(0);
 
-			//Get the block size
+			// Get the block size
 			currentSize = {
 				width: entry.contentRect.width,
 				height: entry.contentRect.height
@@ -92,7 +94,7 @@
 		dblClickSplitter={true}
 	>
 		<Pane size={20} minSize={0} class="workspace__controls">
-			{#if $tableStore.proteinAnnotation}
+			{#if $tableStore && $tableStore.proteinAnnotation}
 				<div class="workspace__treeMap" charset="utf-8">
 					<ColumnFilter table={$tableStore.proteinAnnotation} />
 				</div>

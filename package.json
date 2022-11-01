@@ -44,6 +44,7 @@
 		"@graphql-tools/load-files": "^6.6.0",
 		"@graphql-yoga/common": "^2.12.4",
 		"@prisma/client": "^4.1.1",
+		"@tanstack/svelte-table": "^8.5.15",
 		"graphql": "^16.5.0",
 		"graphql-scalars": "^1.17.0",
 		"plotly.js-dist-min": "^2.14.0",
