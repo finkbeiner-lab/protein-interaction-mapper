@@ -4,7 +4,8 @@
 	import { clickoutside } from '@svelte-put/clickoutside';
 
 	export let name, context;
-	let clicked = false;
+	let clicked,
+		selectable = false;
 	$: filterInput = '';
 
 	// TODO: fix undefined table values so sorting works for all columns
@@ -14,24 +15,27 @@
 	class="editor"
 	use:clickoutside
 	on:mousedown={() => (clicked = true)}
+	on:mouseenter={() => (selectable = true)}
+	on:mouseleave={() => (selectable = false)}
 	on:clickoutside={() => (clicked = false)}
 >
 	<span>{name}</span>
-	{#if clicked}
-		<aside>
-			<div class="editor__controls">
-				{#if context.column.getCanSort()}
-					<button class="controls__sort" on:mousedown={context.column.toggleSorting()}>
-						{#if context.column.getIsSorted().toString() == 'asc'}
-							⬆️
-						{:else if context.column.getIsSorted().toString() == 'desc'}
-							⬇️
-						{:else}
-							↕️
-						{/if}
-					</button>
-				{/if}
-			</div>
+
+	<aside>
+		<div class="editor__controls">
+			{#if context.column.getCanSort() && selectable | clicked}
+				<button class="controls__sort" on:mousedown={context.column.toggleSorting()}>
+					{#if context.column.getIsSorted().toString() == 'asc'}
+						⬆️
+					{:else if context.column.getIsSorted().toString() == 'desc'}
+						⬇️
+					{:else}
+						↕️
+					{/if}
+				</button>
+			{/if}
+		</div>
+		{#if clicked}
 			<input
 				type="text"
 				placeholder="search column..."
@@ -40,8 +44,8 @@
 					context.column.setFilterValue(filterInput);
 				}}
 			/>
-		</aside>
-	{/if}
+		{/if}
+	</aside>
 </div>
 
 <style lang="scss">
