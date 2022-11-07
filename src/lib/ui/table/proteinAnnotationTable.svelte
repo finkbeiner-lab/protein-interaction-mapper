@@ -4,7 +4,8 @@
 		createSvelteTable,
 		flexRender,
 		getCoreRowModel,
-		getSortedRowModel
+		getSortedRowModel,
+		getFilteredRowModel
 	} from '@tanstack/svelte-table';
 
 	import { proteinAnnotationSerializer } from '$lib/schema/data';
@@ -13,7 +14,6 @@
 	import Cell from './cell.svelte';
 
 	export let proteinData, tableState;
-	console.log(proteinData);
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 
@@ -26,19 +26,22 @@
 					accessorKey: 'Gene_Symbol',
 					header: 'Gene Symbol',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				},
 				{
 					accessorKey: 'Name',
 					header: 'Name',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				},
 				{
 					accessorKey: 'UniProt_ID',
 					header: 'UniProt ID',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				}
 			]
 		},
@@ -50,44 +53,52 @@
 					accessorKey: 'Branch',
 					header: 'Branch',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				},
 				{
 					accessorKey: 'Class',
 					header: 'Class',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				},
 				{
 					accessorKey: 'Group',
 					header: 'Group',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				},
 				{
 					accessorKey: 'Subgroup',
 					header: 'Subgroup',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				},
 				{
 					accessorKey: 'Type',
 					header: 'Type',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				},
 				{
 					accessorKey: 'Distinguishing_Domains',
 					header: 'Distinguishing Domains',
 					cell: (info) => info.getValue(),
-					footer: (props) => props.column.id
+					footer: (props) => props.column.id,
+					filterFn: 'includesString'
 				}
 			]
 		}
 	];
 
+	let columnFilters = [];
 	let columnOrder = [];
 	let columnVisibility = {};
+	let sorting = [];
 
 	const setColumnOrder = (updater) => {
 		if (updater instanceof Function) {
@@ -119,14 +130,12 @@
 		}));
 	};
 
-	let sorting = [];
 	const setSorting = (updater) => {
 		if (updater instanceof Function) {
 			sorting = updater(sorting);
 		} else {
 			sorting = updater;
 		}
-		console.log(sorting);
 		options.update((old) => ({
 			...old,
 			state: {
@@ -136,28 +145,41 @@
 		}));
 	};
 
+	const setColumnFilters = (updater) => {
+		if (updater instanceof Function) {
+			columnFilters = updater(columnFilters);
+		} else {
+			sorting = updater;
+		}
+		options.update((old) => ({
+			...old,
+			state: {
+				...old.state,
+				columnFilters
+			}
+		}));
+	};
+
 	const options = writable({
 		data: serializedProteinData,
 		columns: defaultColumns,
 		state: {
+			columnFilters,
 			columnOrder,
 			columnVisibility,
 			sorting
 		},
+		onColumnFiltersChange: setColumnFilters,
 		onColumnOrderChange: setColumnOrder,
 		onSortingChange: setSorting,
 		onColumnVisibilityChange: setColumnVisibility,
 		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		debugTable: true
 	});
 
 	tableState = createSvelteTable(options);
-	console.log(
-		get(tableState)
-			.getRowModel()
-			.rows.filter((row) => !row.original.Gene_Symbol)
-	);
 </script>
 
 {#if $tableState}

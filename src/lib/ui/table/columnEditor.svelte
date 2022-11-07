@@ -5,9 +5,7 @@
 
 	export let name, context;
 	let clicked = false;
-
-	console.log(name);
-	console.log(context.table.getRowModel());
+	$: filterInput = '';
 
 	// TODO: fix undefined table values so sorting works for all columns
 </script>
@@ -34,7 +32,14 @@
 					</button>
 				{/if}
 			</div>
-			<input type="text" placeholder="search column..." />
+			<input
+				type="text"
+				placeholder="search column..."
+				bind:value={filterInput}
+				on:input={() => {
+					context.column.setFilterValue(filterInput);
+				}}
+			/>
 		</aside>
 	{/if}
 </div>
