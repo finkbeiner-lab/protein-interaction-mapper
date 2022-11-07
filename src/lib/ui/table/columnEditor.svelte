@@ -24,7 +24,10 @@
 	<aside>
 		<div class="editor__controls">
 			{#if context.column.getCanSort() && selectable | clicked}
-				<button class="controls__sort" on:mousedown={context.column.toggleSorting()}>
+				<button
+					class="controls__sort"
+					on:mousedown|stopPropagation={context.column.toggleSorting()}
+				>
 					{#if context.column.getIsSorted().toString() == 'asc'}
 						⬆️
 					{:else if context.column.getIsSorted().toString() == 'desc'}

@@ -16,7 +16,7 @@
 </svelte:head>
 
 <main>
-	<header>
+	<!-- <header>
 		<nav class="nav">
 			<div class="logo">
 				<a class="logo__link" href="/">
@@ -34,7 +34,7 @@
 				<a class="nav__link" href="/download">download</a>
 			</div>
 		</nav>
-	</header>
+	</header> -->
 	<slot />
 </main>
 
