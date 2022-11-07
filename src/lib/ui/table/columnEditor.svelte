@@ -7,7 +7,7 @@
 	let clicked = false;
 
 	console.log(name);
-	console.log(context);
+	console.log(context.table.getRowModel());
 
 	// TODO: fix undefined table values so sorting works for all columns
 </script>

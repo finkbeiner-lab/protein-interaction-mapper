@@ -22,7 +22,11 @@ export function proteinAnnotationSerializer(dataList, delimiterCharacter) {
 			if (Array.isArray(value)) {
 				for (const [j, entry] of value.entries()) {
 					multipleValuePositionMap[entry] = j;
-					valuePositionMap[entry] = i;
+					if (!(entry in valuePositionMap)) {
+						valuePositionMap[entry] = i;
+					} else {
+						valuePositionMap[entry + delimiterCharacter + i.toString()] = i;
+					}
 				}
 			} else {
 				valuePositionMap[value] = i;
@@ -34,8 +38,6 @@ export function proteinAnnotationSerializer(dataList, delimiterCharacter) {
 		if (Object.keys(multipleValuePositionMap).length > 0) {
 			const maxValueLength = Math.max(...Object.values(multipleValuePositionMap));
 			for (let i = 0; i <= maxValueLength; i++) {
-				serializedDataList.push({});
-
 				const valuesInRange = Object.keys(multipleValuePositionMap).filter(
 					(value) => multipleValuePositionMap[value] === i
 				);
@@ -45,7 +47,11 @@ export function proteinAnnotationSerializer(dataList, delimiterCharacter) {
 				);
 				const rowValues = [...constantValues, ...valuesInRange];
 				let missingFields = [...valueNameList];
+				if (rowValues.length <= 0) {
+					break;
+				}
 
+				serializedDataList.push({});
 				for (const value of rowValues) {
 					const field = valueNameList[valuePositionMap[value]];
 					serializedDataList[currentDataIndex][field] = value;
@@ -59,7 +65,6 @@ export function proteinAnnotationSerializer(dataList, delimiterCharacter) {
 				currentDataIndex = serializedDataList.length - 1;
 			}
 		} else {
-			serializedDataList.push({});
 			serializedDataList[currentDataIndex] = uniqueRow;
 		}
 	}

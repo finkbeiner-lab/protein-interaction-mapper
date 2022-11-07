@@ -10,8 +10,10 @@
 	import { proteinAnnotationSerializer } from '$lib/schema/data';
 	import { onMount } from 'svelte';
 	import ColumnEditor from './columnEditor.svelte';
+	import Cell from './cell.svelte';
 
 	export let proteinData, tableState;
+	console.log(proteinData);
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 
@@ -184,9 +186,7 @@
 					<tr>
 						{#each row.getVisibleCells() as cell}
 							<td>
-								<svelte:component
-									this={flexRender(cell.column.columnDef.cell, cell.getContext())}
-								/>
+								<Cell context={cell.getContext()} />
 							</td>
 						{/each}
 					</tr>
