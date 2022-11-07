@@ -1,7 +1,3 @@
-<script context="module">
-	export let tableStore;
-</script>
-
 <script>
 	import { get, writable } from 'svelte/store';
 	import {
@@ -12,11 +8,12 @@
 	} from '@tanstack/svelte-table';
 
 	import { proteinAnnotationSerializer } from '$lib/schema/data';
+	import { onMount } from 'svelte';
+	import ColumnEditor from './columnEditor.svelte';
 
-	export let proteinData;
+	export let proteinData, tableState;
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
-	let defaultData = serializedProteinData;
 
 	const defaultColumns = [
 		{
@@ -25,19 +22,19 @@
 			columns: [
 				{
 					accessorKey: 'Gene_Symbol',
-					header: () => 'Gene Symbol',
+					header: 'Gene Symbol',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id
 				},
 				{
 					accessorKey: 'Name',
-					header: () => 'Name',
+					header: 'Name',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id
 				},
 				{
 					accessorKey: 'UniProt_ID',
-					header: () => 'UniProt ID',
+					header: 'UniProt ID',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id
 				}
@@ -49,13 +46,13 @@
 			columns: [
 				{
 					accessorKey: 'Branch',
-					header: () => 'Branch',
+					header: 'Branch',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id
 				},
 				{
 					accessorKey: 'Class',
-					header: () => 'Class',
+					header: 'Class',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id
 				},
@@ -120,35 +117,62 @@
 		}));
 	};
 
+	let sorting = [];
+	const setSorting = (updater) => {
+		if (updater instanceof Function) {
+			sorting = updater(sorting);
+		} else {
+			sorting = updater;
+		}
+		console.log(sorting);
+		options.update((old) => ({
+			...old,
+			state: {
+				...old.state,
+				sorting
+			}
+		}));
+	};
+
 	const options = writable({
-		data: defaultData,
+		data: serializedProteinData,
 		columns: defaultColumns,
 		state: {
 			columnOrder,
-			columnVisibility
+			columnVisibility,
+			sorting
 		},
 		onColumnOrderChange: setColumnOrder,
+		onSortingChange: setSorting,
 		onColumnVisibilityChange: setColumnVisibility,
 		getCoreRowModel: getCoreRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		debugTable: true
 	});
 
-	tableStore = createSvelteTable(options);
+	tableState = createSvelteTable(options);
+	console.log(
+		get(tableState)
+			.getRowModel()
+			.rows.filter((row) => !row.original.Gene_Symbol)
+	);
 </script>
 
-{#if $tableStore}
-	<div class="p-2">
+{#if $tableState}
+	<div>
 		<table>
 			<thead>
-				{#each $tableStore.getHeaderGroups() as headerGroup}
+				{#each $tableState.getHeaderGroups() as headerGroup}
 					<tr>
 						{#each headerGroup.headers as header}
-							<th>
+							<th colSpan={header.colSpan}>
 								{#if !header.isPlaceholder}
-									<svelte:component
-										this={flexRender(header.column.columnDef.header, header.getContext())}
-									/>
+									<div>
+										<ColumnEditor
+											name={header.column.columnDef.header}
+											context={header.getContext()}
+										/>
+									</div>
 								{/if}
 							</th>
 						{/each}
@@ -156,7 +180,7 @@
 				{/each}
 			</thead>
 			<tbody>
-				{#each $tableStore.getCoreRowModel().rows.slice(0, 20) as row}
+				{#each $tableState.getRowModel().rows.slice(0, 20) as row}
 					<tr>
 						{#each row.getVisibleCells() as cell}
 							<td>
@@ -169,10 +193,10 @@
 				{/each}
 			</tbody>
 			<tfoot>
-				{#each $tableStore.getFooterGroups() as footerGroup}
+				{#each $tableState.getFooterGroups() as footerGroup}
 					<tr>
 						{#each footerGroup.headers as header}
-							<th>
+							<th colSpan={header.colSpan}>
 								{#if !header.isPlaceholder}
 									<svelte:component
 										this={flexRender(header.column.columnDef.footer, header.getContext())}
@@ -188,11 +212,6 @@
 {/if}
 
 <style>
-	html {
-		font-family: sans-serif;
-		font-size: 14px;
-	}
-
 	table {
 		border: 1px solid lightgray;
 	}

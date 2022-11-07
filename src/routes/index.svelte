@@ -43,18 +43,15 @@
 </script>
 
 <script>
-	import ColumnFilter from '$lib/ui/control/filterGrid.svelte';
-
 	import ProteinAnnotationTable from '$lib/ui/table/proteinAnnotationTable.svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
 	import TreeMap from '$lib/ui/plot/treeMap.svelte';
 	import { onMount } from 'svelte';
 
-	import { tableStore } from '$lib/ui/table/proteinAnnotationTable.svelte';
 	import { get } from 'svelte/store';
 
 	export let resolvedQuery;
-	let table, workspace, workspaceSize;
+	let annotationTable, workspace, workspaceSize;
 
 	function updateWorkspaceSize(dimensions) {
 		workspaceSize = {
@@ -94,10 +91,7 @@
 		dblClickSplitter={true}
 	>
 		<Pane size={20} minSize={0} class="workspace__controls">
-			{#if $tableStore && $tableStore.proteinAnnotation}
-				<div class="workspace__treeMap" charset="utf-8">
-					<ColumnFilter table={$tableStore.proteinAnnotation} />
-				</div>
+			{#if $annotationTable}
 				<div class="workspace__treeMap" charset="utf-8">
 					<TreeMap parentSize={currentSize} {workspaceSize} />
 				</div>
@@ -105,7 +99,10 @@
 		</Pane>
 		<Pane size={80} minSize={25} class="workspace__grid">
 			<div class="workspace__table">
-				<ProteinAnnotationTable bind:table proteinData={resolvedQuery.data.allProteins} />
+				<ProteinAnnotationTable
+					bind:tableState={annotationTable}
+					proteinData={resolvedQuery.data.allProteins}
+				/>
 			</div>
 		</Pane>
 	</Splitpanes>

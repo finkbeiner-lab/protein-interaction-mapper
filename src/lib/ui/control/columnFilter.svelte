@@ -1,9 +1,9 @@
 <script>
 	import { get } from 'svelte/store';
 
-	export let tableHook;
+	export let table;
 
-	console.log(tableHook);
+	console.log(table);
 </script>
 
 <div class="demo-widget">
