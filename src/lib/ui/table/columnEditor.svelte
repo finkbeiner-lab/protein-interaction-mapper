@@ -15,9 +15,9 @@
 	class="editor"
 	use:clickoutside
 	on:mousedown={() => (clicked = true)}
+	on:clickoutside={() => (clicked = false)}
 	on:mouseenter={() => (selectable = true)}
 	on:mouseleave={() => (selectable = false)}
-	on:clickoutside={() => (clicked = false)}
 >
 	<span>{name}</span>
 
@@ -25,6 +25,9 @@
 		<div class="editor__controls">
 			{#if context.column.getCanSort() && selectable | clicked}
 				<button
+					title={context.column.getIsSorted().toString() == 'asc'
+						? 'sort descending'
+						: 'sort ascending'}
 					class="controls__sort"
 					on:mousedown|stopPropagation={context.column.toggleSorting()}
 				>
@@ -36,35 +39,69 @@
 						↕️
 					{/if}
 				</button>
+				{#if context.header.column.getCanGroup()}
+					<button
+						title={context.header.column.getIsGrouped() ? 'ungroup' : 'group'}
+						on:mousedown|stopPropagation={context.header.column.getToggleGroupingHandler()}
+					>
+						{#if context.header.column.getIsGrouped()}
+							📤(${context.header.column.getGroupedIndex()})
+						{:else}
+							📥
+						{/if}
+					</button>
+				{/if}
 			{/if}
 		</div>
+
 		{#if clicked}
-			<input
-				type="text"
-				placeholder="search column..."
-				bind:value={filterInput}
-				on:input={() => {
-					context.column.setFilterValue(filterInput);
-				}}
-			/>
+			<div class="editor__menu">
+				<input
+					type="text"
+					placeholder="search column..."
+					bind:value={filterInput}
+					on:input={() => {
+						context.column.setFilterValue(filterInput);
+					}}
+				/>
+			</div>
 		{/if}
 	</aside>
 </div>
 
 <style lang="scss">
+	@use 'sass:map';
+	@import '../../../styles/color';
+
 	span {
 		margin: auto;
 	}
 
+	button {
+		cursor: pointer;
+		position: relative;
+	}
+
 	aside {
 		position: fixed;
-		margin: 0 2rem;
+		margin: 0 1rem;
+		background-color: map.get($palette, 'glaucous');
 
 		align-self: center;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.editor {
+		cursor: pointer;
+		z-index: 1;
+		position: relative;
+
 		&__controls {
+			display: flex;
+		}
+		&__menu {
+			padding: 0.5em;
 			display: flex;
 		}
 	}

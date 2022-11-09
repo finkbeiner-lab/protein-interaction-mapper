@@ -51,7 +51,7 @@
 		"install": "^0.13.0",
 		"plotly.js-dist-min": "^2.14.0",
 		"svelte-grid": "^5.1.1",
-		"svelte-headless-table": "^0.15.1",
+		"svelte-resizable-columns": "^1.0.11",
 		"svelte-splitpanes": "^0.7.1"
 	}
 }

@@ -14,6 +14,7 @@
 	import Cell from './cell.svelte';
 
 	export let proteinData, tableState;
+	let tableElement;
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 
@@ -27,21 +28,24 @@
 					header: 'Gene Symbol',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				},
 				{
 					accessorKey: 'Name',
 					header: 'Name',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				},
 				{
 					accessorKey: 'UniProt_ID',
 					header: 'UniProt ID',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				}
 			]
 		},
@@ -54,42 +58,48 @@
 					header: 'Branch',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				},
 				{
 					accessorKey: 'Class',
 					header: 'Class',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				},
 				{
 					accessorKey: 'Group',
 					header: 'Group',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				},
 				{
 					accessorKey: 'Subgroup',
 					header: 'Subgroup',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				},
 				{
 					accessorKey: 'Type',
 					header: 'Type',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				},
 				{
 					accessorKey: 'Distinguishing_Domains',
 					header: 'Distinguishing Domains',
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
-					filterFn: 'includesString'
+					filterFn: 'includesString',
+					aggregationFn: 'unique'
 				}
 			]
 		}
@@ -180,11 +190,66 @@
 	});
 
 	tableState = createSvelteTable(options);
+
+	const createResizableColumn = function (col, resizer) {
+		// Track the current position of mouse
+		let x = 0;
+		let w = 0;
+
+		const mouseDownHandler = function (e) {
+			// Get the current mouse position
+			x = e.clientX;
+
+			// Calculate the current width of column
+			const styles = window.getComputedStyle(col);
+			w = parseInt(styles.width, 10);
+
+			// Attach listeners for document's events
+			document.addEventListener('mousemove', mouseMoveHandler);
+			document.addEventListener('mouseup', mouseUpHandler);
+		};
+
+		const mouseMoveHandler = function (e) {
+			// Determine how far the mouse has been moved
+			const dx = e.clientX - x;
+
+			// Update the width of column
+			col.style.width = `${w + dx}px`;
+		};
+
+		// When user releases the mouse, remove the existing event listeners
+		const mouseUpHandler = function () {
+			document.removeEventListener('mousemove', mouseMoveHandler);
+			document.removeEventListener('mouseup', mouseUpHandler);
+		};
+
+		resizer.addEventListener('mousedown', mouseDownHandler);
+	};
+	onMount(() => {
+		// Query all headers
+		const cols = tableElement.querySelectorAll('th');
+
+		// Loop over them
+		[].forEach.call(cols, function (col) {
+			// Create a resizer element
+			const resizer = document.createElement('div');
+			resizer.classList.add('resizer');
+
+			// Set the height
+			resizer.style.height = `${tableState.offsetHeight}px`;
+
+			// Add a resizer element to the column
+			col.appendChild(resizer);
+
+			// Will be implemented in the next section
+			createResizableColumn(col, resizer);
+		});
+	});
 </script>
 
 {#if $tableState}
 	<div>
-		<table>
+		<table bind:this={tableElement}>
 			<thead>
 				{#each $tableState.getHeaderGroups() as headerGroup}
 					<tr>
@@ -246,6 +311,7 @@
 		border-bottom: 1px solid lightgray;
 		border-right: 1px solid lightgray;
 		padding: 2px 4px;
+		z-index: 3;
 	}
 
 	td {
