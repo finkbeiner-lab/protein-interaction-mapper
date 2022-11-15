@@ -85,7 +85,6 @@
 	aside {
 		position: fixed;
 		margin: 0 1rem;
-		background-color: map.get($palette, 'glaucous');
 
 		align-self: center;
 		display: flex;
@@ -103,6 +102,7 @@
 		&__menu {
 			padding: 0.5em;
 			display: flex;
+			background-color: map.get($palette, 'glaucous');
 		}
 	}
 </style>

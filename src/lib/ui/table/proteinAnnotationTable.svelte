@@ -5,6 +5,7 @@
 		flexRender,
 		getCoreRowModel,
 		getSortedRowModel,
+		getGroupedRowModel,
 		getFilteredRowModel
 	} from '@tanstack/svelte-table';
 
@@ -14,7 +15,7 @@
 	import Cell from './cell.svelte';
 
 	export let proteinData, tableState;
-	let tableElement;
+	let tableElement, cellState;
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 
@@ -109,6 +110,8 @@
 	let columnOrder = [];
 	let columnVisibility = {};
 	let sorting = [];
+	let grouping = [];
+	$: setGrouping;
 
 	const setColumnOrder = (updater) => {
 		if (updater instanceof Function) {
@@ -170,6 +173,21 @@
 		}));
 	};
 
+	const setGrouping = (updater) => {
+		if (updater instanceof Function) {
+			grouping = updater(grouping);
+		} else {
+			grouping = updater;
+		}
+		options.update((old) => ({
+			...old,
+			state: {
+				...old.state,
+				grouping
+			}
+		}));
+	};
+
 	const options = writable({
 		data: serializedProteinData,
 		columns: defaultColumns,
@@ -177,8 +195,10 @@
 			columnFilters,
 			columnOrder,
 			columnVisibility,
-			sorting
+			sorting,
+			grouping
 		},
+		onGroupingChange: setGrouping,
 		onColumnFiltersChange: setColumnFilters,
 		onColumnOrderChange: setColumnOrder,
 		onSortingChange: setSorting,
@@ -186,11 +206,11 @@
 		getCoreRowModel: getCoreRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getSortedRowModel: getSortedRowModel(),
+		getGroupedRowModel: getGroupedRowModel(),
 		debugTable: true
 	});
 
 	tableState = createSvelteTable(options);
-
 	const createResizableColumn = function (col, resizer) {
 		// Track the current position of mouse
 		let x = 0;
@@ -272,8 +292,41 @@
 				{#each $tableState.getRowModel().rows.slice(0, 20) as row}
 					<tr>
 						{#each row.getVisibleCells() as cell}
-							<td>
-								<Cell context={cell.getContext()} />
+							<td
+								style="background: {cell.getIsGrouped()
+									? '#0aff0082'
+									: cell.getIsAggregated()
+									? '#ffa50078'
+									: cell.getIsPlaceholder()
+									? '#ff000042'
+									: 'white'}"
+								bind:this={cellState}
+							>
+								{#if cell.getIsGrouped()}
+									<button
+										on:click={row.getToggleExpandedHandler()}
+										style="cursor: {row.getCanExpand() ? 'pointer' : 'normal'}"
+									>
+										{#if row.getIsExpanded()}
+											'👇'
+										{:else}
+											'👉'
+										{/if}
+										<Cell context={cell.getContext()} />
+										<span> {row.subRows.length}</span>
+									</button>
+								{:else if cell.getIsAggregated()}
+									<svelte:component
+										this={flexRender(
+											cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
+											cell.getContext()
+										)}
+									/>
+								{:else if cell.getIsPlaceholder()}
+									{(cellState = null)}
+								{:else}
+									<Cell context={cell.getContext()} />
+								{/if}
 							</td>
 						{/each}
 					</tr>
