@@ -364,7 +364,6 @@
 		border-bottom: 1px solid lightgray;
 		border-right: 1px solid lightgray;
 		padding: 2px 4px;
-		z-index: 3;
 	}
 
 	td {

@@ -9,6 +9,7 @@
 	$: filterInput = '';
 
 	// TODO: fix undefined table values so sorting works for all columns
+	console.log(context);
 </script>
 
 <div
@@ -45,7 +46,7 @@
 						on:mousedown|stopPropagation={context.header.column.getToggleGroupingHandler()}
 					>
 						{#if context.header.column.getIsGrouped()}
-							📤(${context.header.column.getGroupedIndex()})
+							📤
 						{:else}
 							📥
 						{/if}
@@ -54,7 +55,7 @@
 			{/if}
 		</div>
 
-		{#if clicked}
+		{#if clicked & context.column.getCanFilter()}
 			<div class="editor__menu">
 				<input
 					type="text"
@@ -93,7 +94,7 @@
 
 	.editor {
 		cursor: pointer;
-		z-index: 1;
+
 		position: relative;
 
 		&__controls {
