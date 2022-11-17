@@ -8,10 +8,11 @@
 		getGroupedRowModel,
 		getFilteredRowModel
 	} from '@tanstack/svelte-table';
+	import { clickoutside } from '@svelte-put/clickoutside';
 
 	import { proteinAnnotationSerializer } from '$lib/schema/data';
 	import { onMount } from 'svelte';
-	import ColumnEditor from './columnEditor.svelte';
+	import Header from './Header.svelte';
 	import Cell from './cell.svelte';
 
 	export let proteinData, tableState;
@@ -274,16 +275,7 @@
 				{#each $tableState.getHeaderGroups() as headerGroup}
 					<tr>
 						{#each headerGroup.headers as header}
-							<th colSpan={header.colSpan}>
-								{#if !header.isPlaceholder}
-									<div>
-										<ColumnEditor
-											name={header.column.columnDef.header}
-											context={header.getContext()}
-										/>
-									</div>
-								{/if}
-							</th>
+							<Header name={header.column.columnDef.header} context={header.getContext()} />
 						{/each}
 					</tr>
 				{/each}
@@ -358,12 +350,6 @@
 
 	tbody {
 		border-bottom: 1px solid lightgray;
-	}
-
-	th {
-		border-bottom: 1px solid lightgray;
-		border-right: 1px solid lightgray;
-		padding: 2px 4px;
 	}
 
 	td {
