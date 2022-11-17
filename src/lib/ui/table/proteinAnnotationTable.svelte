@@ -6,6 +6,7 @@
 		getCoreRowModel,
 		getSortedRowModel,
 		getGroupedRowModel,
+		getExpandedRowModel,
 		getFilteredRowModel
 	} from '@tanstack/svelte-table';
 
@@ -30,7 +31,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				},
 				{
 					accessorKey: 'Name',
@@ -38,7 +39,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				},
 				{
 					accessorKey: 'UniProt_ID',
@@ -46,7 +47,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				}
 			]
 		},
@@ -60,7 +61,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				},
 				{
 					accessorKey: 'Class',
@@ -68,7 +69,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				},
 				{
 					accessorKey: 'Group',
@@ -76,7 +77,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				},
 				{
 					accessorKey: 'Subgroup',
@@ -84,7 +85,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				},
 				{
 					accessorKey: 'Type',
@@ -92,7 +93,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				},
 				{
 					accessorKey: 'Distinguishing_Domains',
@@ -100,7 +101,7 @@
 					cell: (info) => info.getValue(),
 					footer: (props) => props.column.id,
 					filterFn: 'includesString',
-					aggregationFn: 'unique'
+					aggregationFn: 'uniqueCount'
 				}
 			]
 		}
@@ -207,6 +208,7 @@
 		getFilteredRowModel: getFilteredRowModel(),
 		getSortedRowModel: getSortedRowModel(),
 		getGroupedRowModel: getGroupedRowModel(),
+		getExpandedRowModel: getExpandedRowModel(),
 		debugTable: true
 	});
 
@@ -308,10 +310,7 @@
 									</button>
 								{:else if cell.getIsAggregated()}
 									<svelte:component
-										this={flexRender(
-											cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
-											cell.getContext()
-										)}
+										this={flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())}
 									/>
 								{:else if cell.getIsPlaceholder()}
 									{(cellState = null)}

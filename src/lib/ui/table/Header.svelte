@@ -24,8 +24,8 @@
 			<span>{name}</span>
 
 			<aside>
-				<div class="editor__controls">
-					{#if context.column.getCanSort() && selectable | clicked}
+				{#if context.column.getCanSort() && selectable | clicked}
+					<div class="editor__controls">
 						<button
 							title={context.column.getIsSorted().toString() == 'asc'
 								? 'sort descending'
@@ -53,8 +53,8 @@
 								{/if}
 							</button>
 						{/if}
-					{/if}
-				</div>
+					</div>
+				{/if}
 
 				{#if clicked & context.column.getCanFilter()}
 					<div class="editor__menu">
@@ -90,6 +90,7 @@
 	button {
 		cursor: pointer;
 		position: relative;
+		margin: 5px;
 	}
 
 	aside {
@@ -106,6 +107,8 @@
 
 		&__controls {
 			display: flex;
+			background-color: var(--radiant-orange);
+			padding: 5px;
 		}
 		&__menu {
 			padding: 0.5em;
