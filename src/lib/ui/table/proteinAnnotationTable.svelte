@@ -8,11 +8,10 @@
 		getGroupedRowModel,
 		getFilteredRowModel
 	} from '@tanstack/svelte-table';
-	import { clickoutside } from '@svelte-put/clickoutside';
 
 	import { proteinAnnotationSerializer } from '$lib/schema/data';
 	import { onMount } from 'svelte';
-	import Header from './Header.svelte';
+	import Header from './header.svelte';
 	import Cell from './cell.svelte';
 
 	export let proteinData, tableState;

@@ -1,6 +1,4 @@
 <script>
-	import { onMount } from 'svelte';
-	import { get } from 'svelte/store';
 	import { clickoutside } from '@svelte-put/clickoutside';
 
 	export let name, context;
