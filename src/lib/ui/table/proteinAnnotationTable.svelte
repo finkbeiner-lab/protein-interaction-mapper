@@ -16,7 +16,7 @@
 	import Cell from './cell.svelte';
 
 	export let proteinData, tableState;
-	let tableElement, cellState;
+	let tableElement;
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 
@@ -293,7 +293,6 @@
 									: cell.getIsPlaceholder()
 									? '#ff000042'
 									: 'white'}"
-								bind:this={cellState}
 							>
 								{#if cell.getIsGrouped()}
 									<button
@@ -313,7 +312,7 @@
 										this={flexRender(cell.column.columnDef.aggregatedCell, cell.getContext())}
 									/>
 								{:else if cell.getIsPlaceholder()}
-									{(cellState = null)}
+									{' '}
 								{:else}
 									<Cell context={cell.getContext()} />
 								{/if}
