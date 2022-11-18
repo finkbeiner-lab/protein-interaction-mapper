@@ -45,13 +45,13 @@
 <script>
 	import ProteinAnnotationTable from '$lib/ui/table/proteinAnnotationTable.svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
-	import TreeMap from '$lib/ui/plot/treeMap.svelte';
+	import TreeMap from '$lib/ui/control/treeMap.svelte';
 	import { onMount } from 'svelte';
 
 	import { get } from 'svelte/store';
 
 	export let resolvedQuery;
-	let annotationTable, workspace, workspaceSize;
+	let annotationTable, annotationSchema, workspace, workspaceSize;
 
 	function updateWorkspaceSize(dimensions) {
 		workspaceSize = {
@@ -93,14 +93,20 @@
 		<Pane size={20} minSize={0} class="workspace__controls">
 			{#if $annotationTable}
 				<div class="workspace__treeMap" charset="utf-8">
-					<TreeMap parentSize={currentSize} {workspaceSize} />
+					<TreeMap
+						parentSize={currentSize}
+						tableRows={$annotationTable.getRowModel()}
+						tableSchema={annotationSchema[1].columns}
+						{workspaceSize}
+					/>
 				</div>
 			{/if}
 		</Pane>
 		<Pane size={80} minSize={25} class="workspace__grid">
 			<div class="workspace__table">
 				<ProteinAnnotationTable
-					bind:tableState={annotationTable}
+					bind:tableContext={annotationTable}
+					bind:defaultColumns={annotationSchema}
 					proteinData={resolvedQuery.data.allProteins}
 				/>
 			</div>

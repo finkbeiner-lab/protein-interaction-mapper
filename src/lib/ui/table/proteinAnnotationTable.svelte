@@ -7,7 +7,8 @@
 		getSortedRowModel,
 		getGroupedRowModel,
 		getExpandedRowModel,
-		getFilteredRowModel
+		getFilteredRowModel,
+		getPaginationRowModel
 	} from '@tanstack/svelte-table';
 
 	import { proteinAnnotationSerializer } from '$lib/schema/data';
@@ -15,12 +16,12 @@
 	import Header from './header.svelte';
 	import Cell from './cell.svelte';
 
-	export let proteinData, tableState;
+	export let proteinData, tableContext;
 	let tableElement;
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 
-	const defaultColumns = [
+	export const defaultColumns = [
 		{
 			header: 'Index',
 			footer: (props) => props.column.id,
@@ -209,10 +210,11 @@
 		getSortedRowModel: getSortedRowModel(),
 		getGroupedRowModel: getGroupedRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
 		debugTable: true
 	});
 
-	tableState = createSvelteTable(options);
+	tableContext = createSvelteTable(options);
 	const createResizableColumn = function (col, resizer) {
 		// Track the current position of mouse
 		let x = 0;
@@ -258,7 +260,7 @@
 			resizer.classList.add('resizer');
 
 			// Set the height
-			resizer.style.height = `${tableState.offsetHeight}px`;
+			resizer.style.height = `${tableContext.offsetHeight}px`;
 
 			// Add a resizer element to the column
 			col.appendChild(resizer);
@@ -269,11 +271,11 @@
 	});
 </script>
 
-{#if $tableState}
+{#if $tableContext}
 	<div>
 		<table bind:this={tableElement}>
 			<thead>
-				{#each $tableState.getHeaderGroups() as headerGroup}
+				{#each $tableContext.getHeaderGroups() as headerGroup}
 					<tr>
 						{#each headerGroup.headers as header}
 							<Header name={header.column.columnDef.header} context={header.getContext()} />
@@ -282,7 +284,7 @@
 				{/each}
 			</thead>
 			<tbody>
-				{#each $tableState.getRowModel().rows.slice(0, 20) as row}
+				{#each $tableContext.getRowModel().rows as row}
 					<tr>
 						{#each row.getVisibleCells() as cell}
 							<td
@@ -322,7 +324,7 @@
 				{/each}
 			</tbody>
 			<tfoot>
-				{#each $tableState.getFooterGroups() as footerGroup}
+				{#each $tableContext.getFooterGroups() as footerGroup}
 					<tr>
 						{#each footerGroup.headers as header}
 							<th colSpan={header.colSpan}>

@@ -5,9 +5,6 @@
 	let clicked,
 		selectable = false;
 	$: filterInput = '';
-
-	// TODO: fix undefined table values so sorting works for all columns
-	console.log(context);
 </script>
 
 <th
@@ -96,7 +93,7 @@
 	aside {
 		position: fixed;
 		margin: 0 1rem;
-
+		z-index: 1;
 		align-self: center;
 		display: flex;
 		flex-direction: column;
