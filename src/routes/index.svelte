@@ -48,10 +48,8 @@
 	import TreeMap from '$lib/ui/control/treeMap.svelte';
 	import { onMount } from 'svelte';
 
-	import { get } from 'svelte/store';
-
 	export let resolvedQuery;
-	let annotationTable, annotationSchema, workspace, workspaceSize;
+	let annotationTable, annotationSchema, workspace, workspaceSize, treeMapState;
 
 	function updateWorkspaceSize(dimensions) {
 		workspaceSize = {
@@ -81,6 +79,8 @@
 		// This callback cleans up the observer
 		return () => resizeObserver.unobserve(workspace);
 	});
+
+	$: console.log(treeMapState);
 </script>
 
 <section class="workspace" bind:this={workspace}>
@@ -98,6 +98,7 @@
 						tableRows={$annotationTable.getRowModel()}
 						tableSchema={annotationSchema[1].columns}
 						{workspaceSize}
+						bind:mapState={treeMapState}
 					/>
 				</div>
 			{/if}
