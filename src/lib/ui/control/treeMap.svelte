@@ -1,24 +1,16 @@
 <script>
 	import { onMount, beforeUpdate, afterUpdate } from 'svelte';
-	export let parentSize, workspaceSize, tableRows, tableSchema;
+	export let parentSize, workspaceSize, tableRows;
+	export let mapState;
 	let doResize = false;
 	let oldSize, treeMap, Plotly;
 
 	onMount(async () => {
 		Plotly = await import('plotly.js-dist-min');
 
-		// export let labels, parents, values;
-
-		// var labels = ['Annotations', 'Gene Symbol', 'Seth', 'Enos', 'Noam', 'Abel', 'Awan', 'Enoch', 'Azura'];
-		// var parents = ['', 'Annotations', 'Annotations', 'Seth', 'Seth', 'Eve', 'Eve', 'Awan', 'Eve'];
-
-		console.log(tableRows);
-
 		const headers = tableRows.rows[0].getAllCells().map((cell) => {
 			return cell.column.columnDef.header;
 		});
-
-		console.log(headers);
 
 		const headerParent = () => {
 			let headerParent = [];
@@ -27,8 +19,8 @@
 			}
 			return headerParent;
 		};
-		let labels = ['Annotations'].concat(headers),
-			parents = [''].concat(headerParent());
+		let labels = [].concat(headers),
+			parents = [].concat(headerParent());
 
 		tableRows.rows.filter((row) => {
 			const rowCells = row.getAllCells();
@@ -40,7 +32,6 @@
 				if (!valuesInColumn.hasOwnProperty(header)) {
 					const value = cell.getValue();
 					valuesInColumn[header] = new Set();
-					//console.log(!valuesInColumn.has(value));
 					if (!valuesInColumn[header].has(value) & (value != '')) {
 						valuesInColumn[header].add(value);
 						labels.push(value);
@@ -49,10 +40,6 @@
 				}
 			});
 		});
-
-		console.log(parents);
-
-		console.log(labels);
 
 		var data = [
 			{
@@ -82,6 +69,20 @@
 		var config = { responsive: true, displayModeBar: false };
 
 		Plotly.react(treeMap, data, layout, config);
+		treeMap.on('plotly_click', function (event) {
+			console.log(event.points[0]);
+
+			if (typeof mapState == 'undefined') {
+				mapState = {
+					currentPath: event.points[0].currentPath,
+					label: event.points[0].label,
+					filteredColumns: []
+				};
+			} else {
+				mapState.currentPath = event.points[0].currentPath;
+				mapState.label = event.points[0].label;
+			}
+		});
 	});
 
 	beforeUpdate(() => {

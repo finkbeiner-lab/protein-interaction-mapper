@@ -48,10 +48,8 @@
 	import TreeMap from '$lib/ui/control/treeMap.svelte';
 	import { onMount } from 'svelte';
 
-	import { get } from 'svelte/store';
-
 	export let resolvedQuery;
-	let annotationTable, annotationSchema, workspace, workspaceSize;
+	let annotationTable, annotationSchema, workspace, workspaceSize, treeMapState;
 
 	function updateWorkspaceSize(dimensions) {
 		workspaceSize = {
@@ -94,9 +92,9 @@
 			{#if $annotationTable}
 				<div class="workspace__treeMap" charset="utf-8">
 					<TreeMap
+						bind:mapState={treeMapState}
 						parentSize={currentSize}
 						tableRows={$annotationTable.getRowModel()}
-						tableSchema={annotationSchema[1].columns}
 						{workspaceSize}
 					/>
 				</div>
@@ -108,6 +106,7 @@
 					bind:tableContext={annotationTable}
 					bind:defaultColumns={annotationSchema}
 					proteinData={resolvedQuery.data.allProteins}
+					mapState={treeMapState}
 				/>
 			</div>
 		</Pane>
