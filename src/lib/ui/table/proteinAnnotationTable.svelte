@@ -16,8 +16,31 @@
 	import Header from './header.svelte';
 	import Cell from './cell.svelte';
 
-	export let proteinData, tableContext;
+	export let proteinData, tableContext, mapState;
 	let tableElement;
+
+	function treeMapFilter(mapState, tableContext) {
+		if (Object(mapState).hasOwnProperty('label') && typeof mapState.label != 'undefined') {
+			let annotation = mapState.currentPath.split('/').at(-2); // annotation name is behind trailing slash
+			console.log(annotation);
+			console.log(mapState);
+			get(tableContext)
+				.getAllFlatColumns()
+				.filter((column) => {
+					if (column.columnDef.header == annotation) {
+						column.setFilterValue(mapState.label);
+						mapState.filteredColumns.push(column);
+					}
+				});
+		} else if (Object(mapState).hasOwnProperty('currentPath') && mapState.currentPath == '/') {
+			console.log(mapState);
+			mapState.filteredColumns.forEach((column) => {
+				column.setFilterValue('');
+			});
+		}
+	}
+
+	$: treeMapFilter(mapState, tableContext);
 
 	const serializedProteinData = proteinAnnotationSerializer(proteinData, '␞');
 

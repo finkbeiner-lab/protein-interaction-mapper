@@ -79,8 +79,6 @@
 		// This callback cleans up the observer
 		return () => resizeObserver.unobserve(workspace);
 	});
-
-	$: console.log(treeMapState);
 </script>
 
 <section class="workspace" bind:this={workspace}>
@@ -94,11 +92,10 @@
 			{#if $annotationTable}
 				<div class="workspace__treeMap" charset="utf-8">
 					<TreeMap
+						bind:mapState={treeMapState}
 						parentSize={currentSize}
 						tableRows={$annotationTable.getRowModel()}
-						tableSchema={annotationSchema[1].columns}
 						{workspaceSize}
-						bind:mapState={treeMapState}
 					/>
 				</div>
 			{/if}
@@ -109,6 +106,7 @@
 					bind:tableContext={annotationTable}
 					bind:defaultColumns={annotationSchema}
 					proteinData={resolvedQuery.data.allProteins}
+					mapState={treeMapState}
 				/>
 			</div>
 		</Pane>

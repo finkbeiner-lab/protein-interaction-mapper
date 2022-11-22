@@ -1,6 +1,7 @@
 <script>
 	import { onMount, beforeUpdate, afterUpdate } from 'svelte';
-	export let parentSize, workspaceSize, tableRows, mapState;
+	export let parentSize, workspaceSize, tableRows;
+	export let mapState;
 	let doResize = false;
 	let oldSize, treeMap, Plotly;
 
@@ -69,7 +70,18 @@
 
 		Plotly.react(treeMap, data, layout, config);
 		treeMap.on('plotly_click', function (event) {
-			mapState = { currentPath: event.points[0].currentPath, label: event.points[0].label };
+			console.log(event.points[0]);
+
+			if (typeof mapState == 'undefined') {
+				mapState = {
+					currentPath: event.points[0].currentPath,
+					label: event.points[0].label,
+					filteredColumns: []
+				};
+			} else {
+				mapState.currentPath = event.points[0].currentPath;
+				mapState.label = event.points[0].label;
+			}
 		});
 	});
 
