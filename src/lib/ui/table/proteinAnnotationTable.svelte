@@ -22,8 +22,11 @@
 	function treeMapFilter(mapState, tableContext) {
 		if (Object(mapState).hasOwnProperty('label') && typeof mapState.label != 'undefined') {
 			let annotation = mapState.currentPath.split('/').at(-2); // annotation name is behind trailing slash
-			console.log(annotation);
-			console.log(mapState);
+
+			if (annotation == 'Annotations') {
+				// if not filtering beyond annotation category, don't set filter yet
+				return;
+			}
 			get(tableContext)
 				.getAllFlatColumns()
 				.filter((column) => {
