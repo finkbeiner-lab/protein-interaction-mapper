@@ -25,6 +25,9 @@
 
 			if (annotation == 'Annotations') {
 				// if not filtering beyond annotation category, don't set filter yet
+				mapState.filteredColumns.forEach((column) => {
+					column.setFilterValue('');
+				}); // TODO: flag whether to pin filters in treemap
 				return;
 			}
 			get(tableContext)
