@@ -39,7 +39,6 @@
 					}
 				});
 		} else if (Object(mapState).hasOwnProperty('currentPath') && mapState.currentPath == '/') {
-			console.log(mapState);
 			mapState.filteredColumns.forEach((column) => {
 				column.setFilterValue('');
 			});
@@ -368,6 +367,68 @@
 				{/each}
 			</tfoot>
 		</table>
+		<div class="h-2" />
+		<div class="flex items-center gap-2">
+			<button
+				class="border rounded p-1"
+				on:click={() => $tableContext.setPageIndex(0)}
+				disabled={!$tableContext.getCanPreviousPage()}
+			>
+				{'<<'}
+			</button>
+			<button
+				class="border rounded p-1"
+				on:click={() => $tableContext.previousPage()}
+				disabled={!$tableContext.getCanPreviousPage()}
+			>
+				{'<'}
+			</button>
+			<button
+				class="border rounded p-1"
+				on:click={() => $tableContext.nextPage()}
+				disabled={!$tableContext.getCanNextPage()}
+			>
+				{'>'}
+			</button>
+			<button
+				class="border rounded p-1"
+				on:click={() => $tableContext.setPageIndex($tableContext.getPageCount() - 1)}
+				disabled={!$tableContext.getCanNextPage()}
+			>
+				{'>>'}
+			</button>
+			<span class="flex items-center gap-1">
+				<div>Page</div>
+				<strong>
+					{$tableContext.getState().pagination.pageIndex + 1} of{' '}
+					{$tableContext.getPageCount()}
+				</strong>
+			</span>
+			<span class="flex items-center gap-1">
+				| Go to page:
+				<input
+					type="number"
+					defaultValue={$tableContext.getState().pagination.pageIndex + 1}
+					onChange={(e) => {
+						const page = e.target.value ? Number(e.target.value) - 1 : 0;
+						$tableContext.setPageIndex(page);
+					}}
+					class="border p-1 rounded w-16"
+				/>
+			</span>
+			<select
+				value={$tableContext.getState().pagination.pageSize}
+				on:change={(e) => {
+					$tableContext.setPageSize(Number(e.target.value));
+				}}
+			>
+				{#each [10, 20, 30, 40, 50] as pageSize}
+					<option key={pageSize} value={pageSize}>
+						Show {pageSize}
+					</option>
+				{/each}
+			</select>
+		</div>
 	</div>
 {/if}
 
